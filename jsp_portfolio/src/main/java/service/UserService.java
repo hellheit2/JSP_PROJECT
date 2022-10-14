@@ -22,6 +22,8 @@ public class UserService {
 		Connection con = JdbcUtility.getConnection(); 
 		UserDAO userDAO = new UserDAO();
 		
+		/* 중복 가능한지 여부 확인 코드 */
+		
 		System.out.println(userDAO.join(con, user));
 	}
 }

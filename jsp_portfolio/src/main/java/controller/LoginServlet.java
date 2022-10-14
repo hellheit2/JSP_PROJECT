@@ -45,22 +45,25 @@ public class LoginServlet extends HttpServlet {
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
 				request.setAttribute("id", user.getId());
-				rd = request.getRequestDispatcher("");
+				System.out.println("관리자");
 			}else { //일반 사용자
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
 				request.setAttribute("id", user.getId());
-				rd = request.getRequestDispatcher("");
+				System.out.println("일반 사용자");
+				
+				/* 새창으로 갈 경우*/
+				/* 
+				 rd = request.getRequestDispatcher("/view/loginSuccess.jsp");
+				 rd.forward(request, response);
+				 */
+				 response.sendRedirect("/"); //el 문자랑 한쌍
+				
 			}
 			System.out.println("로그인");
 		}else {
-			request.setAttribute("msg", "로그인 실패");
-			request.setAttribute("loc", "/");
-			rd = request.getRequestDispatcher("");
+			System.out.println("로그인 실패");
 		}
-		
-	
-		rd.forward(request, response);
 	}
 
 }
