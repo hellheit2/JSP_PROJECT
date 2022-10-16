@@ -57,7 +57,7 @@ public class LoginServlet extends HttpServlet {
 				 rd = request.getRequestDispatcher("/view/loginSuccess.jsp");
 				 rd.forward(request, response);
 				 */
-				 response.sendRedirect("/"); //el 문자랑 한쌍
+				 response.sendRedirect("/home"); //el 문자랑 한쌍
 				
 			}
 			System.out.println("로그인");
