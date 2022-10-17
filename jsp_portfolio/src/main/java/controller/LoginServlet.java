@@ -30,6 +30,10 @@ public class LoginServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("로그인 서블릿");
+		
+		request.setCharacterEncoding("utf-8");
+		response.setContentType("text/html; charset=utf-8");
+		
 		String id = request.getParameter("userId"); 
 		String pwd = request.getParameter("userPwd");
 		

@@ -11,12 +11,14 @@ import vo.UserVO;
 
 public class UserDAO {
 
-	public UserVO login(Connection con, String id, String pwd) {
+	public UserVO login(String id, String pwd) {
 		UserVO user = null;
+		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String query = "select * from user where id=? and pwd=?";
 		try {
+			con = JdbcUtility.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, id);
 			pstmt.setString(2, pwd);
@@ -44,13 +46,15 @@ public class UserDAO {
 	}
 	
 
-	public int join(Connection con, UserVO user) {
+	public int join(UserVO user) {
+		Connection con = null;
 		PreparedStatement pstmt = null;
 
 		int cnt = 0;
 		String query = "insert into user (id, pwd, name, email)"
 				+ " values(?,?,?,?)";
 		try {
+			con = JdbcUtility.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1,user.getId());
 			pstmt.setString(2,user.getPwd());

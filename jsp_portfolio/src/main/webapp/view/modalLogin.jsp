@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 
 <div id="login_modal">
-    <form method="post" action="/login.do">
+    <form method="post" action="<c:url value='/login.do' />">
 		<h3>로그인 화면</h3>
 		<div class="form-group">
 			<input type="text" class="form-control" placeholder="아이디" id="u_id" name="userId" maxlength="20">

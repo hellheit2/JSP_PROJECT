@@ -22,5 +22,6 @@
 	<classpathentry kind="lib" path="D:/ksh_data/jsp_data/jsp_portfolio/src/main/webapp/WEB-INF/lib/taglibs-standard-impl-1.2.5.jar"/>
 	<classpathentry kind="lib" path="D:/ksh_data/jsp_data/jsp_portfolio/src/main/webapp/WEB-INF/lib/taglibs-standard-jstlel-1.2.5.jar"/>
 	<classpathentry kind="lib" path="D:/ksh_data/jsp_data/jsp_portfolio/src/main/webapp/WEB-INF/lib/taglibs-standard-spec-1.2.5.jar"/>
+	<classpathentry kind="lib" path="D:/ksh_data/jsp_data/jsp_portfolio/src/main/webapp/WEB-INF/lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
