@@ -56,10 +56,15 @@ public class TMDBAPIServlet extends HttpServlet {
 			StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/discover/"); // url
 			urlBuilder.append(URLEncoder.encode(type,"UTF-8")); // 카테고리
 			urlBuilder.append("?api_key=" +  URLEncoder.encode(key,"UTF-8") ); // 인증키
-			urlBuilder.append("&with_watch_providers=" + URLEncoder.encode(provider,"UTF-8")); // 서비스 플랫폼 tmdb oas 참고
-			urlBuilder.append("&watch_region=KR&language=ko&page=" + URLEncoder.encode(page,"UTF-8")); // page
+			//urlBuilder.append("&with_watch_providers=" + URLEncoder.encode(provider,"UTF-8")); // 서비스 플랫폼 tmdb oas 참고
+			urlBuilder.append("&watch_region=KR&language=ko&include_image_language=ko,null"); // 언어
+			urlBuilder.append("&page=" + URLEncoder.encode(page,"UTF-8")); // page
 	
-			
+			//https://image.tmdb.org/t/p/original/ or /w500
+			//특정아이디
+			//https://api.themoviedb.org/3/movie/(아이디)?api_key=5cf3fb46e228d63ef250b0c89399e2b8
+			//장르 리스트
+			//https://api.themoviedb.org/3/genre/movie/list?api_key=5cf3fb46e228d63ef250b0c89399e2b8&language=ko
 			URL url = new URL(urlBuilder.toString());
 			
 			BufferedReader bf;
