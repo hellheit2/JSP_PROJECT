@@ -4,7 +4,7 @@
 
 
 <div id="join_modal">
-	 <form method="post" action="/join.do">
+	 <form method="post" action="/join">
 	    <p>기본 정보</p>
 	    <div class="form_wrap1">
 	        <div class="line">

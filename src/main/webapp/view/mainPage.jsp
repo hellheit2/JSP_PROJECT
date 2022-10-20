@@ -65,8 +65,14 @@
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
-                        <input type="button" value="로그인" class="login1" onclick="modalClick(this);" id="login">
-                        <input type="button" value="회원가입" class="login2" onclick="modalClick(this);" id="join">
+                        <c:if test="${empty user}">
+                        	<input type="button" value="로그인" class="login1" onclick="modalClick(this);" id="login">
+                        	<input type="button" value="회원가입" class="login2" onclick="modalClick(this);" id="join">
+                        </c:if>
+                         <c:if test="${not empty user}">
+                        	<input type="button" value="로그아웃" class="login1" onclick="modalClick(this);" id="logout">
+                        	<input type="button" value="마이페이지" class="login2" onclick="modalClick(this);" id="myPage">
+                        </c:if>
                     </form>
                 </div>
             </div>
@@ -116,30 +122,32 @@
         <!-- Wrap the rest of the page in another container to center all the content. -->
         <div id="wrap">
             <h2>💛리뷰 랭킹💛</h2>
-            <p class="plus_btn"><a href="#">+더보기</a></p>
+            <p class="plus_btn"><a href="/board">+더보기</a></p>
             <div class="movie_container">
-            	
-            	<c:forEach var="contentVO" items="${contentList}">
-				    <div class="movie1">
-				        <div class="movie_poster">
-				        	<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
-				            <p><img src=<c:out value="${url}${contentVO.poster_path}" />
-				            			 alt="#" width="300" height="400"></p>
-				            <p class="plus"><img src="../assets/images/plus.png" alt="#" width="64" height="64"></p>
-				        </div>
-				        <div class="movie_ex1">
-				            <div class="movie_idx"><c:out value="${contentVO.title }" /></div>
-			 	            <div class="movie_date"><c:out value="${contentVO.release_date }" /></div>
-				            <div class="movie_review"><c:out value="${contentVO.vote_average }" /></div>
-				        </div>
-				    </div>
-			    </c:forEach>
-			    <script>
-					var dateList = document.getElementsByClassName('movie_date');
-					Array.from(dateList).forEach(function(date){
-						date.innerHTML = date.innerHTML.slice(-4);	
-					});
-				</script>
+            	<div class="movie1">
+	            	<c:forEach var="contentVO" items="${contentList}" begin="0" end="10">
+					    <div class="movie_poster">
+					        <div class="movie_wrap">
+					        	<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
+					            <a href="#"><img src="<c:out value='${url}${contentVO.poster_path}' />" alt="#" width="288" height="400"></a>
+					            <div class="plus"><p><img src="../assets/images/plus.png" alt="#" width="64" height="64"></p></div>
+					        </div>
+					        <div class="movie_ex1">
+					            <div class="movie_idx" title="<c:out value="${contentVO.title }" />">
+					            	<c:out value="${contentVO.title }" />
+					            </div>
+				 	            <div class="movie_date"><c:out value="${contentVO.release_date }" /></div>
+					            <div class="movie_review"><c:out value="${contentVO.vote_average }" /></div>
+					        </div>
+					    </div>
+				    </c:forEach>
+				    <script>
+						var dateList = document.getElementsByClassName('movie_date');
+						Array.from(dateList).forEach(function(date){
+							date.innerHTML = date.innerHTML.slice(-4);	
+						});
+					</script>
+				</div>
             </div>
         </div>
 

@@ -42,13 +42,82 @@ public class TMDBServiceImpl implements TMDBService {
 	}
 
 	@Override
-	public ContentVO getContent(ContentVO vo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public ContentVO getContent(String content_id) {
+		int page = 1;
+		
+		ContentVO content = new ContentVO();
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+		try {
+			
+			while(true) { // 페이지 반복
+				StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/movie/"); // url
+				urlBuilder.append(URLEncoder.encode(content_id,"UTF-8")); // 영화 아이디
+				urlBuilder.append("?api_key=" +  URLEncoder.encode(API_KEY,"UTF-8") ); // 인증키
+				urlBuilder.append("&watch_region=KR&language=ko&include_image_language=ko,null"); // 언어
+				urlBuilder.append("&page=" + page); // page
+				URL url = new URL(urlBuilder.toString());
 
+				BufferedReader bf;
+
+				bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+
+				String result = bf.readLine();
+
+				JSONParser jsonParser = new JSONParser();
+				JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+				
+				content.setId(Integer.parseInt(jsonObject.get("id").toString()));
+				content.setTitle(jsonObject.get("title").toString());
+				content.setOriginal_title(jsonObject.get("original_title").toString());
+				content.setOverview(jsonObject.get("overview").toString());
+				content.setVote_count(Integer.parseInt(jsonObject.get("vote_count").toString()));
+				content.setVote_average(Float.parseFloat(jsonObject.get("vote_average").toString()));
+				
+				// 개봉 일자 정보 확인 후 set
+				if (jsonObject.get("release_date") == null ||
+						jsonObject.get("release_date").equals("")) {
+					String today = dateFormat.format(new Date());
+					content.setRelease_date(dateFormat.parse(today));
+				} else {
+					content.setRelease_date(dateFormat.parse(jsonObject.get("release_date").toString()));
+				}
+				// poster_path 정보 확인 후 set
+				if(jsonObject.get("poster_path") == null || 
+						jsonObject.get("poster_path").toString().equals("")) {
+					content.setPoster_path("");
+				}else {
+					content.setPoster_path(jsonObject.get("poster_path").toString());
+				}
+				
+				// backdrop_path 정보 확인 후 set
+				if(jsonObject.get("backdrop_path") == null ||
+						jsonObject.get("backdrop_path").toString().equals("")) {
+					content.setBackdrop_path("");
+				}else {
+					content.setBackdrop_path(jsonObject.get("backdrop_path").toString());
+				}
+				
+				
+				
+				List<Integer> genreList = new ArrayList<Integer>();
+				// 장르 id를 List<integer> 형태로 저장 → 장르 비교를 위한 작업
+				JSONArray genre_list = (JSONArray) jsonObject.get("genre_ids");
+				for (int k = 0; k < genre_list.size(); k++) {
+					genreList.add(Integer.parseInt(String.valueOf(genre_list.get(k))));
+				}
+				content.setGenre_ids(genreList);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return content;
+	}
+	
+	
 	@Override
-	public List<ContentVO> getContentList(String type, String provider) {
+	public List<ContentVO> getContentList(int size) {
 
 		int page = 1;
 		
@@ -64,8 +133,9 @@ public class TMDBServiceImpl implements TMDBService {
 			//https://image.tmdb.org/t/p/original/ or /w500
 			//특정영화 아이디
 			//https://api.themoviedb.org/3/movie/(아이디)?api_key=5cf3fb46e228d63ef250b0c89399e2b8	
-			
-			while(true) {
+			//https://api.themoviedb.org/3/movie/popular?api_key=5cf3fb46e228d63ef250b0c89399e2b8&with_watch_providers=8&language=ko
+			Loop1:
+		    while(true) { // 페이지 반복
 				StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/discover/"); // url
 				urlBuilder.append(URLEncoder.encode(type_temp,"UTF-8")); // 카테고리
 				urlBuilder.append("?api_key=" +  URLEncoder.encode(API_KEY,"UTF-8") ); // 인증키
@@ -83,8 +153,8 @@ public class TMDBServiceImpl implements TMDBService {
 				JSONParser jsonParser = new JSONParser();
 				JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
 				JSONArray jsonArray = (JSONArray) jsonObject.get("results");
-
-				for (int i = 0; i < jsonArray.size(); i++) {
+				
+				for (int i = 0; i < jsonArray.size(); i++) { // 페이지당 컨텐츠 반복
 					
 					ContentVO temp = new ContentVO();
 					JSONObject content = (JSONObject) jsonArray.get(i);
@@ -98,7 +168,8 @@ public class TMDBServiceImpl implements TMDBService {
 					temp.setVote_average(Float.parseFloat(content.get("vote_average").toString()));
 					
 					// 개봉 일자 정보 확인 후 set
-					if (content.get("release_date") == null || content.get("release_date").equals("")) {
+					if (content.get("release_date") == null ||
+							content.get("release_date").equals("")) {
 						String today = dateFormat.format(new Date());
 						temp.setRelease_date(dateFormat.parse(today));
 					} else {
@@ -130,18 +201,22 @@ public class TMDBServiceImpl implements TMDBService {
 					}
 					
 					temp.setGenre_ids(genreList);
+					
+					
 					contentList.add(temp);
+					
+					if(contentList.size() == size) {
+						return contentList;
+					}
 
-					
-					// page가 total_pages보다 커질 경우
-					page++;
-					
-					if(page > 5)
-						break;
-					/*
-					 * if(page > Integer.parseInt(jsonObject.get("total_pages").toString())) break;
-					 */
 				}
+				
+				page++;
+				
+				int total =  Integer.parseInt(jsonObject.get("total_pages").toString());
+				if(page > total) 
+					break;
+	
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
