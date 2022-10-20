@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import service.UserService;
 import vo.UserVO;
 
-@WebServlet("/join.do")
-public class JoinServlet extends HttpServlet {
+@WebServlet(name="joinController", value="/join")
+public class JoinController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
@@ -40,6 +40,7 @@ public class JoinServlet extends HttpServlet {
 		
 		System.out.println(user.toString());
 		
+		response.sendRedirect("/home");
 		
 	}
 

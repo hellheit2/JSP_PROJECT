@@ -96,9 +96,12 @@ body {
   }
 }
 
-#wrap{width: 1300px;  margin: 0 auto;}
-#wrap>h2{width: 240px; float: left; border-bottom: 2px dashed #d5ae2e; padding-bottom: 10px;}
-.plus_btn a{float:right;  display: inline-block; width: 80px; height: 50px; background-color: yellowgreen; border-radius: 10px; font-size: 20px; list-style: none; margin-bottom: 20px; color: #333; }
+#wrap{width: 1500px;  margin: 0 auto;}
+#wrap > h2{width: 240px; float: left; border-bottom: 2px dashed #d5ae2e; padding-bottom: 10px;}
+.plus_btn a{float:right;  display: inline-block; width: 80px; height: 50px; 
+  background-color: yellowgreen; border-radius: 10px; 
+  font-size: 20px; list-style: none; margin-bottom: 20px; 
+  color: #333; line-height: 50px;}
 
 .banner{
   background-image: url(../images/maxresdefault.jpg); 
@@ -120,16 +123,33 @@ background-size: contain;}
 .login2{border-radius: 10px;}
 .login1:hover , .login2:hover{background-color: #5bf8a4;}
 
-.movie_container{clear:both;  width: 1300px; height: 600px;  margin: 0 auto;}
-.movie1{float: left; margin-right: 30px;}
+.movie_container{clear:both;  width: 1500px; height: 600px;  margin: 0 auto;}
+.movie1 .movie_poster{float: left; margin-right: 15px;}
 .movie_container div:last-child{margin-right: 0;}
 
 
-.movie1{ width: 300px; height: 500px;position: relative; }
-.movie_poster img{border-radius: 20px;transition: all 0.5s; }
-.movie_poster img:hover{opacity: 0.5; }
-.plus{ position: absolute; top: 150px; left: 120px;opacity: 0;}
-.movie_poster:hover .plus {opacity: 1;}
-.movie_idx{font-size: 20px; font-weight: bold;}
-.movie_review{color: red; font-size: 20px;}
-.movie_ex1{padding-left: 10px;}
+
+#movie_poster {width: 288px;}
+
+.movie_wrap {border: 1px solid #333333;width: 288px;height: 400px;
+  cursor: pointer; position: relative; overflow: hidden; }
+
+.movie_wrap .plus {position: absolute;left: 0;top: 0;background-color: #b5b5b574; 
+  width: 300px;height: 400px;opacity: 0;transition: all 0.5s;
+} /*hover 시 배경+plus버튼*/
+
+.movie_wrap:hover .plus {opacity: 1;}
+
+.movie_wrap .plus p {color: #ffffff; position: absolute; left: 50%; top: 50%;
+   transform: translate(-50%, -50%); font-size: 20px;}
+
+.movie_wrap img {
+  transform: scale(1.1);
+  transition: all 0.5s;
+}
+
+.movie_wrap:hover img {
+  transform: scale(1);
+}
+.movie_ex1{ width: 288px; }
+.movie_idx{width:288px; height: 30px; font-size: 20px; overflow: hidden; white-space:nowrap; text-overflow: ellipsis; }

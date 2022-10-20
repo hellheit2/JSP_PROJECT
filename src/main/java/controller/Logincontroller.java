@@ -15,8 +15,8 @@ import service.UserService;
 import vo.UserVO;
 
 
-@WebServlet("/login.do")
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "loginController", value="/login")
+public class Logincontroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	public void init(ServletConfig config) throws ServletException {
@@ -58,10 +58,10 @@ public class LoginServlet extends HttpServlet {
 				
 				/* 새창으로 갈 경우*/
 				/* 
-				 rd = request.getRequestDispatcher("/view/loginSuccess.jsp");
-				 rd.forward(request, response);
-				 */
-				 response.sendRedirect("/home"); //el 문자랑 한쌍
+				rd = request.getRequestDispatcher("/view/loginSuccess.jsp");
+				rd.forward(request, response);
+				*/
+				response.sendRedirect("/home"); //el 문자랑 한쌍
 				
 			}
 			System.out.println("로그인");
