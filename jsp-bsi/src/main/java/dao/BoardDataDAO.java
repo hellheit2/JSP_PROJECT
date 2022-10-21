@@ -54,15 +54,15 @@ public class BoardDataDAO {
 	 */
 	
 	private final String BOARD_INSERT = "insert into board(board_id, title, writer, "
-			+ "content) values((select nvl(max(seq), 0)+1 from board),?,?,?)";
+			+ "content) values((select nvl(max(board_id), 0)+1 from board),?,?,?)";
 	
-	private final String BOARD_UPDATE = "update board set title=?, content=? where seq=?";
+	private final String BOARD_UPDATE = "update board set title=?, content=? where board_id=?";
 	
-	private final String BOARD_DELETE = "delete board where seq=?";
+	private final String BOARD_DELETE = "delete board where board_id=?";
 	
-	private final String BOARD_GET = "select * from board where seq=?";
+	private final String BOARD_GET = "select * from board where board_id=?";
 	
-	private final String BOARD_LIST = "select * from board order by seq desc";
+	private final String BOARD_LIST = "select * from board order by board_id desc";
 	
 	public void insertBoard(BoardVO vo) {
 		System.out.println("===> JDBC로 insertBoard() 기능 처리");
@@ -156,7 +156,7 @@ public class BoardDataDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtility.close(conn, rs, stmt);
+			JdbcUtility.close(rs, stmt, conn);
 		}
 		return boardList;
 	}
