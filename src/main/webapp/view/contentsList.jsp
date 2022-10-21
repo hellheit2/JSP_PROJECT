@@ -4,24 +4,19 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
-<%
-  request.setCharacterEncoding("UTF-8");
-%>    
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>영화 목록</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Bootstrap icons-->
+       <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="../assets/css/styles.css" rel="stylesheet" />
     </head>
     <body>
         <!-- Navigation-->
@@ -68,20 +63,20 @@
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                  
                  	<c:forEach var="contentVO" items="${pageInfo.pageList}">
-                 		<div class="col mb-5">
+                 		<div class="col mb-5 content">
 	                        <div class="card h-100">
 	                            <!-- Sale badge 순위-->
 	                            <!-- <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div> -->
-
-	                            <img class="card-img-top" src="<c:out value="${url}${contentVO.poster_path}" />" 
-	                            						alt=<c:out: value="${contentVO.title}" /> width="450" height="500" />
+								<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
+	                            <img class="card-img-top" src=<c:out value="${url}${contentVO.poster_path}" /> 
+	                            						alt="#" width="300" height="400" />
 	                            <!-- Product details-->
 	                            <div class="card-body p-4">
 	                                <div class="text-center">
 	                                    <!-- Product name-->
 	                                    <h5 class="fw-bolder"><c:out value="${contentVO.title }" /></h5>
 	                                    <!-- Product reviews 별점-->
-	                                    <!-- <div class="d-flex justify-content-center small text-warning mb-2">
+	                                    <!-- <div class="d-flex justsify-content-center small text-warning mb-2">
 	                                        <div class="bi-star-fill"></div>
 	                                        <div class="bi-star-fill"></div>
 	                                        <div class="bi-star-fill"></div>

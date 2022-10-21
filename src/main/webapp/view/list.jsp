@@ -33,7 +33,7 @@
     </c:forEach>
 	<div id="pagination">
 		<!-- 변수 매핑 -->
-		<c:set var="action" value="/list" />
+		<c:set var="action" value="/board" />
 		<c:set var="page" value="${pageInfo.currentPage}" />
 		<c:set var="beginPage" value="${pageInfo.startPage}" />
 		<c:set var="endPage" value="${pageInfo.endPage}" />
