@@ -16,6 +16,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import util.PageRequest;
+import util.PageResponse;
 import vo.ContentVO;
 
 public class TMDBServiceImpl implements TMDBService {
@@ -117,13 +119,12 @@ public class TMDBServiceImpl implements TMDBService {
 	
 	
 	@Override
-	public List<ContentVO> getContentList(int size) {
-
-		int page = 1;
+	public PageResponse<ContentVO> getPageContentList(int page) {
 		
 		List<ContentVO> contentList = new ArrayList<>();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
+		int totalResult = 0;
 		try {
 			String type_temp = "movie";
 		    String provider_temp = "8"; //Netflix 서비스 플랫폼 tmdb oas 참고
@@ -134,95 +135,85 @@ public class TMDBServiceImpl implements TMDBService {
 			//특정영화 아이디
 			//https://api.themoviedb.org/3/movie/(아이디)?api_key=5cf3fb46e228d63ef250b0c89399e2b8	
 			//https://api.themoviedb.org/3/movie/popular?api_key=5cf3fb46e228d63ef250b0c89399e2b8&with_watch_providers=8&language=ko
-			Loop1:
-		    while(true) { // 페이지 반복
-				StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/discover/"); // url
-				urlBuilder.append(URLEncoder.encode(type_temp,"UTF-8")); // 카테고리
-				urlBuilder.append("?api_key=" +  URLEncoder.encode(API_KEY,"UTF-8") ); // 인증키
-				urlBuilder.append("&with_watch_providers=" + URLEncoder.encode(provider_temp,"UTF-8")); // 서비스 플랫폼
-				urlBuilder.append("&watch_region=KR&language=ko&include_image_language=ko,null"); // 언어
-				urlBuilder.append("&page=" + page); // page
-				URL url = new URL(urlBuilder.toString());
+		    
+			StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/discover/"); // url
+			urlBuilder.append(URLEncoder.encode(type_temp,"UTF-8")); // 카테고리
+			urlBuilder.append("?api_key=" +  URLEncoder.encode(API_KEY,"UTF-8") ); // 인증키
+			urlBuilder.append("&with_watch_providers=" + URLEncoder.encode(provider_temp,"UTF-8")); // 서비스 플랫폼
+			urlBuilder.append("&watch_region=KR&language=ko&include_image_language=ko,null"); // 언어
+			urlBuilder.append("&page=" + page); // page
+			URL url = new URL(urlBuilder.toString());
 
-				BufferedReader bf;
+			BufferedReader bf;
 
-				bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+			bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 
-				String result = bf.readLine();
+			String result = bf.readLine();
+			JSONParser jsonParser = new JSONParser();
+			JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+			JSONArray jsonArray = (JSONArray) jsonObject.get("results");
 
-				JSONParser jsonParser = new JSONParser();
-				JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
-				JSONArray jsonArray = (JSONArray) jsonObject.get("results");
+			totalResult = Integer.parseInt(jsonObject.get("total_results").toString());
+			
+			for (int i = 0; i < jsonArray.size(); i++) { // 페이지당 컨텐츠 반복
 				
-				for (int i = 0; i < jsonArray.size(); i++) { // 페이지당 컨텐츠 반복
-					
-					ContentVO temp = new ContentVO();
-					JSONObject content = (JSONObject) jsonArray.get(i);
+				ContentVO temp = new ContentVO();
+				JSONObject content = (JSONObject) jsonArray.get(i);
 
-					
-					temp.setId(Integer.parseInt(content.get("id").toString()));
-					temp.setTitle(content.get("title").toString());
-					temp.setOriginal_title(content.get("original_title").toString());
-					temp.setOverview(content.get("overview").toString());
-					temp.setVote_count(Integer.parseInt(content.get("vote_count").toString()));
-					temp.setVote_average(Float.parseFloat(content.get("vote_average").toString()));
-					
-					// 개봉 일자 정보 확인 후 set
-					if (content.get("release_date") == null ||
-							content.get("release_date").equals("")) {
-						String today = dateFormat.format(new Date());
-						temp.setRelease_date(dateFormat.parse(today));
-					} else {
-						temp.setRelease_date(dateFormat.parse(content.get("release_date").toString()));
-					}
-					
-					// poster_path 정보 확인 후 set
-					if(content.get("poster_path") == null || 
-							 content.get("poster_path").toString().equals("")) {
-						temp.setPoster_path("");
-					}else {
-						temp.setPoster_path(content.get("poster_path").toString());
-					}
-					
-					// backdrop_path 정보 확인 후 set
-					if(content.get("backdrop_path") == null ||
-							 content.get("backdrop_path").toString().equals("")) {
-						temp.setBackdrop_path("");
-					}else {
-						temp.setBackdrop_path(content.get("backdrop_path").toString());
-					}
-					
-					
-					List<Integer> genreList = new ArrayList<Integer>();
-					// 장르 id를 List<integer> 형태로 저장 → 장르 비교를 위한 작업
-					JSONArray genre_list = (JSONArray) content.get("genre_ids");
-					for (int k = 0; k < genre_list.size(); k++) {
-						genreList.add(Integer.parseInt(String.valueOf(genre_list.get(k))));
-					}
-					
-					temp.setGenre_ids(genreList);
-					
-					
-					contentList.add(temp);
-					
-					if(contentList.size() == size) {
-						return contentList;
-					}
-
+				
+				temp.setId(Integer.parseInt(content.get("id").toString()));
+				temp.setTitle(content.get("title").toString());
+				temp.setOriginal_title(content.get("original_title").toString());
+				temp.setOverview(content.get("overview").toString());
+				temp.setVote_count(Integer.parseInt(content.get("vote_count").toString()));
+				temp.setVote_average(Float.parseFloat(content.get("vote_average").toString()));
+				
+				// 개봉 일자 정보 확인 후 set
+				if (content.get("release_date") == null ||
+						content.get("release_date").equals("")) {
+					String today = dateFormat.format(new Date());
+					temp.setRelease_date(dateFormat.parse(today));
+				} else {
+					temp.setRelease_date(dateFormat.parse(content.get("release_date").toString()));
 				}
 				
-				page++;
+				// poster_path 정보 확인 후 set
+				if(content.get("poster_path") == null || 
+						 content.get("poster_path").toString().equals("")) {
+					temp.setPoster_path("");
+				}else {
+					temp.setPoster_path(content.get("poster_path").toString());
+				}
 				
-				int total =  Integer.parseInt(jsonObject.get("total_pages").toString());
-				if(page > total) 
-					break;
-	
+				// backdrop_path 정보 확인 후 set
+				if(content.get("backdrop_path") == null ||
+						 content.get("backdrop_path").toString().equals("")) {
+					temp.setBackdrop_path("");
+				}else {
+					temp.setBackdrop_path(content.get("backdrop_path").toString());
+				}
+				
+				
+				List<Integer> genreList = new ArrayList<Integer>();
+				// 장르 id를 List<integer> 형태로 저장 → 장르 비교를 위한 작업
+				JSONArray genre_list = (JSONArray) content.get("genre_ids");
+				for (int k = 0; k < genre_list.size(); k++) {
+					genreList.add(Integer.parseInt(String.valueOf(genre_list.get(k))));
+				}
+				
+				temp.setGenre_ids(genreList);
+			
+				contentList.add(temp);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		return contentList;
+		PageRequest pageRequest = new PageRequest();
+		pageRequest.setPage(page);
+		PageResponse<ContentVO> pageResponse = new PageResponse<ContentVO>(pageRequest, contentList, totalResult);
+		
+		return pageResponse;
 	}
 
 	@Override

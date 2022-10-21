@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import service.TMDBService;
 import service.TMDBServiceImpl;
+import util.PageResponse;
 import vo.ContentVO;
 
 
@@ -27,14 +28,10 @@ public class HomeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("home");
 		
-		HttpSession session = request.getSession();
-		session.removeAttribute("contentList");
-		if(session.getAttribute("contentList") == null) {
-			TMDBService tmdb = new TMDBServiceImpl();
-			List<ContentVO> contentList = tmdb.getContentList(100);
-			
-			session.setAttribute("contentList", contentList);
-		}
+		TMDBService tmdb = new TMDBServiceImpl();
+		PageResponse<ContentVO> pageInfo = tmdb.getPageContentList(1);
+		
+		request.setAttribute("pageInfo",pageInfo);
 		
 		request.getRequestDispatcher("/view/mainPage.jsp").forward(request, response);
 	}

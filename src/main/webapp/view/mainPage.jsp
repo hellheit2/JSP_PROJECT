@@ -125,7 +125,7 @@
             <p class="plus_btn"><a href="/list">+더보기</a></p>
             <div class="movie_container">
             	<div class="movie1">
-	            	<c:forEach var="contentVO" items="${contentList}" begin="0" end="10">
+	            	<c:forEach var="contentVO" items="${pageInfo.pageList}" begin="0" end="10">
 					    <div class="movie_poster">
 					        <div class="movie_wrap">
 					        	<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />

@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import service.BoardService;
+import service.TMDBService;
+import service.TMDBServiceImpl;
 import util.PageRequest;
 import util.PageResponse;
 import vo.ContentVO;
@@ -28,6 +30,16 @@ public class ListController extends HttpServlet {
 		response.setContentType("text/html; charset=utf-8");
 		
 		
+		String page = request.getParameter("page");
+		
+		if(page == null) {
+			page = "1";
+		}
+		
+		TMDBService tmdb = new TMDBServiceImpl();
+		PageResponse<ContentVO> pageInfo = tmdb.getPageContentList(Integer.parseInt(page));
+		
+		/*
 		HttpSession session = request.getSession();
 		List<ContentVO> contentList = (List) session.getAttribute("contentList");
 		System.out.println("리스트 size: " + contentList.size());
@@ -50,8 +62,10 @@ public class ListController extends HttpServlet {
 		int total = contentList.size();
 		PageResponse<ContentVO> pageResponse = new PageResponse<ContentVO>(pageRequest, pageList, total);
 		
+		*/
+		System.out.println(pageInfo.getPageList().toString());
 		try {
-			request.setAttribute("pageInfo", pageResponse);
+			request.setAttribute("pageInfo", pageInfo);
 			
 			RequestDispatcher dispatch = request.getRequestDispatcher("/view/contentsList.jsp");
 			dispatch.forward(request, response);
