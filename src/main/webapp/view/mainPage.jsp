@@ -122,7 +122,7 @@
         <!-- Wrap the rest of the page in another container to center all the content. -->
         <div id="wrap">
             <h2>💛리뷰 랭킹💛</h2>
-            <p class="plus_btn"><a href="/board">+더보기</a></p>
+            <p class="plus_btn"><a href="/list">+더보기</a></p>
             <div class="movie_container">
             	<div class="movie1">
 	            	<c:forEach var="contentVO" items="${contentList}" begin="0" end="10">

@@ -17,8 +17,8 @@ import util.PageResponse;
 import vo.ContentVO;
 
 
-@WebServlet(name="boardController", value="/board")
-public class BoardController extends HttpServlet {
+@WebServlet(name="listController", value="/list")
+public class ListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	
@@ -53,7 +53,7 @@ public class BoardController extends HttpServlet {
 		try {
 			request.setAttribute("pageInfo", pageResponse);
 			
-			RequestDispatcher dispatch = request.getRequestDispatcher("/view/list.jsp");
+			RequestDispatcher dispatch = request.getRequestDispatcher("/view/contentsList.jsp");
 			dispatch.forward(request, response);
 			
 		} catch (Exception e) {
