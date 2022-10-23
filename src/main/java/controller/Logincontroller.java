@@ -45,7 +45,7 @@ public class Logincontroller extends HttpServlet {
 		
 		
 		if(user!=null) {
-			if(user.getUno()==1) { // 관리자
+			if(user.getId().equals("admin")) { // 관리자
 				HttpSession session = request.getSession();
 				session.setAttribute("user", user);
 				request.setAttribute("id", user.getId());

@@ -2,73 +2,80 @@
 
 use test;
 
-if exists drop table user;
+drop table if exists user;
 -- 회원 테이블 생성
 create table user(
-    uno int auto_increment not null primary key,
-    id varchar(15),
-    pwd varchar(20),
-    name varchar(15),
+    user_id varchar(15) not null primary key,
+    pwd varchar(20) not null,
+    name varchar(15) not null,
     email varchar(50),
     joinDate date default now()
 );
 
-insert into user (id, pwd, name, email) 
+insert into user (user_id, pwd, name, email) 
 values ('test','test','kim', 'test@naver.com');
 
 
-if exists drop table contents;
+drop table if exists contents;
 -- 회원 테이블 생성
 create table contents(
-    cno int auto_increment not null primary key,
-    title varchar(15),
+    content_id varchar(15) not null primary key,
+    title varchar(15) not null,
     summary text,
     image_path varchar(15),
     view_count int,
     rate float
 );
 
-if exists drop table genre;
+drop table if exists genre;
 -- 회원 테이블 생성
 create table genre(
-    gname varchar(10),
-    cno int,
-    foreign key (cno) references contents(cno),
-    primary key(cno, gname)
+    genre_name varchar(10),
+    content_id varchar(15),
+    foreign key (content_id) references contents(content_id),
+    primary key(content_id, genre_name)
 );
 
-if exists drop table platform;
+drop table if exists platform;
 -- 회원 테이블 생성
 create table platform(
-    pname varchar(10),
-    cno int,
-    foreign key (cno) references contents(cno),
-    primary key(cno, pname)
+    platform_name varchar(10),
+    content_id varchar(15),
+    foreign key (content_id) references contents(content_id),
+    primary key(content_id, platform_name)
 );
 
 
-if exists drop table favorite;
+drop table if exists wish;
 -- 회원 테이블 생성
-create table favorite(
-    uno int,
-	cno int,
-    foreign key (uno) references user(uno),
-    foreign key (cno) references contents(cno),
-    primary key(cno)   
+create table wish(
+    user_id varchar(15),
+	content_id varchar(15),
+    foreign key (user_id) references user(user_id),
+    -- foreign key (content_id) references contents(content_id),
+    primary key(content_id)   
 );
 
 
-if exists drop table comment;
+drop table if exists comment;
 -- 회원 테이블 생성
 create table comment(
     comment_id int auto_increment not null primary key,
-    uno int,
-    cno int,
+    user_id varchar(15),
+    content_id varchar(15),
     parent_comment int default 0,
     comment_body text,
     rate float,
     write_date date default now(),
-    foreign key (uno) references user(uno),
-    foreign key (cno) references contents(cno)
+    foreign key (user_id) references user(user_id),
+    foreign key (content_id) references contents(content_id)
 );
 
+
+select * from user;
+
+
+insert into wish (user_id, content_id) 
+values ('test','960704');
+
+select content_id from wish where user_id = 'test'

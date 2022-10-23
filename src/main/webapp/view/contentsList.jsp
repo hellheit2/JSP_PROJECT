@@ -17,6 +17,9 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="../assets/css/styles.css" rel="stylesheet" />
+        <script src="../assets/js/jquery-3.6.0.min.js"></script>
+        <script src="../assets/js/wish.js"></script>
+    
     </head>
     <body>
         <!-- Navigation-->
@@ -70,6 +73,28 @@
 								<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
 	                            <img class="card-img-top" src=<c:out value="${url}${contentVO.poster_path}" /> 
 	                            						alt="#" width="300" height="400" />
+	                            <div class="position-absolute wishlist" style="top:0.5rem; right:0.5rem;">
+		                            <c:choose>
+		                           		<c:when test="${user != null}">
+		                           			<c:if test="${contentVO.wish == false}">
+								            	<a href="javascript:void(0);" onclick="like_func(this);" class="wish">
+													<img src="../assets/images/wish.png" alt="찜하기" width="45" height="45" id="heart_icon" data-content=<c:out value="${contentVO.id }" />>
+												</a>
+								            </c:if>
+								            <c:if test="${contentVO.wish == true}">
+								            	<a href="javascript:void(0);" onclick="like_func(this);" class="wish">
+													<img src="../assets/images/wish_checked.png" alt="찜하기" width="45" height="45" id="heart_icon" data-content=<c:out value="${contentVO.id }" />>
+												</a>
+											</c:if>	
+		                           		</c:when>
+		                           		<c:otherwise>
+			                           		<a href="javascript: login_need();" class="wish">
+												<img src="../assets/images/wish.png" alt="찜하기" width="45" height="45" id="heart_icon">
+											</a>
+		                           		</c:otherwise>
+		                           	</c:choose>
+	                           	</div>
+                 
 	                            <!-- Product details-->
 	                            <div class="card-body p-4">
 	                                <div class="text-center">
@@ -86,6 +111,7 @@
 	                                    <!-- Product price-->
 	                                    <c:out value="${contentVO.release_date }" /> 
 	                                    <c:out value="${contentVO.vote_average }" />
+	                     
 	                                </div>
 	                            </div>
 	                            <!-- Product actions 더보기-->

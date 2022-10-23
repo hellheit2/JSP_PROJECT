@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import dao.UserDAO;
 import vo.UserVO;
 
@@ -22,4 +24,5 @@ public class UserService {
 		
 		System.out.println(userDAO.join(user));
 	}
+	
 }

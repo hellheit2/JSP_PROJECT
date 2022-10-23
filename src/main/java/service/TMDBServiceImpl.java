@@ -69,7 +69,7 @@ public class TMDBServiceImpl implements TMDBService {
 				JSONParser jsonParser = new JSONParser();
 				JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
 				
-				content.setId(Integer.parseInt(jsonObject.get("id").toString()));
+				content.setId(jsonObject.get("id").toString());
 				content.setTitle(jsonObject.get("title").toString());
 				content.setOriginal_title(jsonObject.get("original_title").toString());
 				content.setOverview(jsonObject.get("overview").toString());
@@ -161,7 +161,7 @@ public class TMDBServiceImpl implements TMDBService {
 				JSONObject content = (JSONObject) jsonArray.get(i);
 
 				
-				temp.setId(Integer.parseInt(content.get("id").toString()));
+				temp.setId(content.get("id").toString());
 				temp.setTitle(content.get("title").toString());
 				temp.setOriginal_title(content.get("original_title").toString());
 				temp.setOverview(content.get("overview").toString());

@@ -28,6 +28,12 @@
 	            </div>
  	            <div class="movie_date"><c:out value="${contentVO.release_date }" /></div>
 	            <div class="movie_review"><c:out value="${contentVO.vote_average }" /></div>
+	            <c:if test="${contentVO.wish == false}">
+	            	<div><p><img src="../assets/images/wish.png" alt="#" width="64" height="64"></p></div>
+	            </c:if>
+	            <c:if test="${contentVO.wish == true}">
+	            	<div><p><img src="../assets/images/wish_checked.png" alt="#" width="64" height="64"></p></div>
+	            </c:if>
 	        </div>
 	    </div>
     </c:forEach>
