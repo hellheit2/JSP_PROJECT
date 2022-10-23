@@ -9,6 +9,7 @@
     <meta charset="UTF-8">
     <title>왓플피디아</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="../assets/js/jquery-3.6.0.min.js"></script>
     <script src="../assets/js/modal.js"></script>
     <link rel="stylesheet" href="../assets/css/modal_test.css">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
@@ -122,10 +123,10 @@
         <!-- Wrap the rest of the page in another container to center all the content. -->
         <div id="wrap">
             <h2>💛리뷰 랭킹💛</h2>
-            <p class="plus_btn"><a href="/board">+더보기</a></p>
+            <p class="plus_btn"><a href="/list">+더보기</a></p>
             <div class="movie_container">
             	<div class="movie1">
-	            	<c:forEach var="contentVO" items="${contentList}" begin="0" end="10">
+	            	<c:forEach var="contentVO" items="${pageInfo.pageList}" begin="0" end="10">
 					    <div class="movie_poster">
 					        <div class="movie_wrap">
 					        	<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />

@@ -11,14 +11,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import service.BoardService;
+import service.ListService;
+import service.TMDBService;
+import service.TMDBServiceImpl;
 import util.PageRequest;
 import util.PageResponse;
 import vo.ContentVO;
+import vo.UserVO;
 
 
-@WebServlet(name="boardController", value="/board")
-public class BoardController extends HttpServlet {
+@WebServlet(name="listController", value="/list")
+public class ListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	
@@ -27,7 +30,27 @@ public class BoardController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("user");
 		
+		String page = request.getParameter("page");
+		
+		if(page == null) {
+			page = "1";
+		}
+		
+		TMDBService tmdb = new TMDBServiceImpl();
+		PageResponse<ContentVO> pageInfo = tmdb.getPageContentList(Integer.parseInt(page));
+		
+
+		System.out.println(user);
+		//찜목록 체크
+		if(user != null) {
+			ListService listService = new ListService();
+			listService.setWishListOnPageList(user,pageInfo.getPageList());
+			System.out.println(pageInfo.getPageList().toString());
+		}
+		/*
 		HttpSession session = request.getSession();
 		List<ContentVO> contentList = (List) session.getAttribute("contentList");
 		System.out.println("리스트 size: " + contentList.size());
@@ -43,17 +66,21 @@ public class BoardController extends HttpServlet {
 			pageRequest.setSize(Integer.parseInt(size));
 		}
 		
-		BoardService boardService = new BoardService();
-		List<ContentVO> pageList = boardService.getListWithPaging(pageRequest,contentList);
+		ListService ListService = new ListService();
+		List<ContentVO> pageList = ListService.getListWithPaging(pageRequest,contentList);
 		
 		//PageResponse(PageRequest pageRequest, List<E> pageList, int total, int width)
 		int total = contentList.size();
 		PageResponse<ContentVO> pageResponse = new PageResponse<ContentVO>(pageRequest, pageList, total);
 		
+		*/
+		System.out.println(pageInfo.getPageList().toString());
+		
+		
 		try {
-			request.setAttribute("pageInfo", pageResponse);
+			request.setAttribute("pageInfo", pageInfo);
 			
-			RequestDispatcher dispatch = request.getRequestDispatcher("/view/list.jsp");
+			RequestDispatcher dispatch = request.getRequestDispatcher("/view/contentsList.jsp");
 			dispatch.forward(request, response);
 			
 		} catch (Exception e) {

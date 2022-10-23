@@ -35,7 +35,7 @@ public class JdbcUtility {
 //			Class.forName("org.mariadb.jdbc.Driver");
 //			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test","root","12345");
 			con = dataFactory.getConnection();
-			System.out.println(con);
+			System.out.println("JdbcUtility : " + con);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

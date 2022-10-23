@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.json.simple.JSONObject;
 
+import util.PageResponse;
 import vo.ContentVO;
 
 public interface TMDBService {
@@ -23,7 +24,7 @@ public interface TMDBService {
 	public ContentVO getContent(String content_id);
 	
 	// 컨텐츠 목록 조회
-	public List<ContentVO> getContentList(int size);
+	public PageResponse<ContentVO> getPageContentList(int page);
 	
 	// 장르 목록 반환
 	public Map<Integer, String> genreList(String type);
