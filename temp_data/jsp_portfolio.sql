@@ -79,3 +79,5 @@ insert into wish (user_id, content_id)
 values ('test','960704');
 
 select content_id from wish where user_id = 'test'
+
+select * from wish;
