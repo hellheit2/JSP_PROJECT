@@ -3,8 +3,8 @@ package dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import util.JdbcUtility;
@@ -31,8 +31,7 @@ public class BoardDataDAO {
 	
 	
 	
-	private final String BOARD_INSERT = "insert into board(board_id, title, writer, "
-			+ "content) values((select nvl(max(board_id), 0)+1 from board),?,?,?)";
+	private final String BOARD_INSERT = "insert into board(writer,title,content) values('?','?','?')";
 	
 	private final String BOARD_UPDATE = "update board set title=?, content=? where board_id=?";
 	
@@ -42,20 +41,29 @@ public class BoardDataDAO {
 	
 	private final String BOARD_LIST = "select * from board order by board_id desc";
 	
-	public void insertBoard(String writer, String title, String content) {
+	public int insertBoard(BoardVO vo) {
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		int cnt = 0;
 		System.out.println("===> JDBC로 insertBoard() 기능 처리");
 		try {
 			conn = JdbcUtility.getConnection();
+			System.out.println(BOARD_INSERT);
 			stmt = conn.prepareStatement(BOARD_INSERT);
-			stmt.setString(1, writer);
-			stmt.setString(2, title);
-			stmt.setString(3, content);
-			stmt.executeUpdate();
+			
+			System.out.println(vo.toString());
+			stmt.setString(1, vo.getWriter());
+			stmt.setString(2, vo.getTitle());
+			stmt.setString(3, vo.getContent());
+			
+			
+			cnt = stmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			JdbcUtility.close(stmt, conn);
+			JdbcUtility.close(conn, null, stmt);
 		}
+		return cnt;
 	}
 	
 	// 글 수정

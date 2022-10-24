@@ -1,17 +1,15 @@
 package vo;
 
+import java.util.Date;
+
 public class BoardVO {
-	private int board_id;// 게시글 번호
+		private int board_id;// 게시글 번호
 	   private int contents_id; // 영화 아이디
 	   private String writer; // 작성자
 	   private String title; // 게시글 제목
 	   private String content; // 내용
-	   
-	   //.. tostring?
-	   
-	   
-	   
-	public int getBoard_id() {
+	   private Date joinDate;
+	   public int getBoard_id() {
 		return board_id;
 	}
 	public void setBoard_id(int board_id) {
@@ -41,13 +39,22 @@ public class BoardVO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	
-	
+	public Date getJoinDate() {
+		return joinDate;
+	}
+	public void setJoinDate(Date joinDate) {
+		this.joinDate = joinDate;
+	}
 	@Override
 	public String toString() {
-		return "BoardDataVO [board_id=" + board_id + ", contents_id=" + contents_id + ", writer=" + writer + ", title="
-				+ title + ", content=" + content + "]";
+		return "BoardVO [board_id=" + board_id + ", contents_id=" + contents_id + ", writer=" + writer + ", title="
+				+ title + ", content=" + content + ", joinDate=" + joinDate + "]";
 	}
+	 
+	   
+	   
+	   
+	
 	
 	
 	

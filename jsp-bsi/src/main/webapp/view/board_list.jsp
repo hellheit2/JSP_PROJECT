@@ -36,11 +36,11 @@
 			<tbody>
 				<c:forEach var="vo" items="${list }">
 					<tr>
-						<td>${vo.bno }</td>
+						<td>${vo.board_id }</td>
 						<td>${vo.writer}</td>
-						<td><a href="getContent.board?bno=${vo.bno }">${vo.title }</a></td>
-						<td><fmt:formatDate value="${vo.regdate }" pattern="yyyy년 MM월dd일 HH시 mm분 ss초" /></td>
-						<td>${vo.hit }</td>
+						<td><a href="getBoard.view?board_id=${vo.board_id }">${vo.title }</a></td>
+						<%-- <td><fmt:formatDate value="${vo.joinDate }" pattern="yyyy년 MM월dd일 HH시 mm분 ss초" /></td> --%>
+						<%-- <td>${vo.hit }</td> --%>
 					</tr>
 				</c:forEach>
 			</tbody>
@@ -57,7 +57,7 @@
                         		<li><a href="#">5</a></li>
                         		<li><a href="#">다음</a></li>
                     			</ul>
-					<input type="button" value="글 작성" class="btn btn-default pull-right" onclick="location.href='write.board'">
+					<input type="button" value="글 작성" class="btn btn-default pull-right" onclick="location.href='write.do'">
 					
 					</td>
 				</tr>

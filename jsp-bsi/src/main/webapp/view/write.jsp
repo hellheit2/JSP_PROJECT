@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,7 @@
 	<h3>게시판 글 작성 페이지</h3>
 	<hr>
 	
-	<form action="regist.board" method="post">
+	<form action="insert.do" method="post">
 		<table border="1" width="500">
 			<tr>
 				<td>작성자</td>
@@ -34,7 +34,7 @@
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="작성 완료" >
-					<input type="button" value="목록" onclick="location.href='list.board'">         
+					<input type="button" value="목록" onclick="location.href='list.do'">         
 				</td>
 			</tr>
 			

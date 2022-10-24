@@ -8,16 +8,16 @@ import javax.servlet.http.HttpServletResponse;
 import dao.BoardDataDAO;
 import vo.BoardVO;
 
-public class GetListImpl implements Command {
+public class GetListImpl {
 
-	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) {
+
+	public List<BoardVO> execute(HttpServletRequest request, HttpServletResponse response) {
 		BoardDataDAO dao =BoardDataDAO.getInstance();
 		List<BoardVO> list =dao.getList();
+		System.out.println(list.toString());
 		
-		request.setAttribute("list", list);
 		
-		
+		return list;
 		
 	}
 
