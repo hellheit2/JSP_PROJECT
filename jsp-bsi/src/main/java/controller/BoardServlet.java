@@ -8,8 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.Command;
+import service.DeleteImpl;
+import service.GetBoardImpl;
+import service.GetListImpl;
+import service.InsertImpl;
 
-@WebServlet("*.board")
+import service.UpdateImpl;
+import service.ViewImpl;
+
+
+@WebServlet("*.do")
 public class BoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -33,44 +42,46 @@ public class BoardServlet extends HttpServlet {
 		String path = request.getContextPath();
 		String command = uri.substring(path.length());
 		
-		// ..
+		System.out.println(command);
+		
+		Command service;
 		
 		switch (command) {
-		case "/목록.do":
-			try {
+		case "/list.do":
+			
 				System.out.println("글 목록 처리");
+				service = new GetListImpl();
+				service.execute(request, response);
 				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+				request.getRequestDispatcher("board_list.jps").forward(request,response); // 앞페이지 이동
+				
 			break;
-		case "/보기.do":
-			try {
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}	
+		case "/insert.do":
+			service = new InsertImpl();
+			service.execute(request, response);	
+			response.sendRedirect("list.do");
 				break;
-		case "/쓰기.do":
-			try {
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+		case "/getBoard.do":
+			service = new ViewImpl(); // 조회수
+			service.execute(request, response);
+			
+			service = new GetBoardImpl();
+			service.execute(request, response);
+			break;
+		case "/write.do":
+			
 				break;
-		case "/삭제.do":
-			try {
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}	
+		case "/delete.do":
+			service = new DeleteImpl();
+			service.execute(request, response);
+			
+			response.sendRedirect("list.board");
 				break;
-		case "/수정.do":
-			try {
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}	
+		case "/update.do":
+			service = new UpdateImpl();
+			service.execute(request, response);
+			
+			response.sendRedirect("getContent.board?bon="+request.getParameter("bno"));
 				break;	
 		}
 	}

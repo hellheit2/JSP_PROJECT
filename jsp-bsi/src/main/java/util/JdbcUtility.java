@@ -67,7 +67,7 @@ public class JdbcUtility {
 		
 	}
 	
-	public static void close(ResultSet rs, PreparedStatement stmt, Connection conn) {
+	public static void close(Connection conn, ResultSet rs, PreparedStatement stmt) {
 		if(rs != null) {
 			try {
 				if(!rs.isClosed()) rs.close();
