@@ -16,7 +16,8 @@
        <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="../assets/css/styles.css" rel="stylesheet" />
+        <link href="../assets/css/contentList.css" rel="stylesheet" />
+        <link href="../assets/css/contentList_add.css" rel="stylesheet" />
         <script src="../assets/js/jquery-3.6.0.min.js"></script>
         <script src="../assets/js/wish.js"></script>
     
@@ -29,24 +30,34 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li>
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#!">All Products</a></li>
-                                <li><hr class="dropdown-divider" /></li>
-                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-                            </ul>
-                        </li>
                     </ul>
                     <form class="d-flex">
-                        <button class="btn btn-outline-dark" type="submit">
-                            <i class="bi-cart-fill me-1"></i>
-                            Cart
-                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-                        </button>
+                    
+                    	<c:if test="${empty user }">
+	                    	<button class="btn btn-outline-dark" type="submit">
+	                            로그인
+	                        </button>
+	                        <button class="btn btn-outline-dark" type="submit">
+	                            회원가입
+	                        </button>
+                    	</c:if>
+                    	<c:if test="${not empty user }">
+	                    	<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+		                    	<li class="nav-item dropdown">
+		                            <a class="nav-link dropdown-toggle" id="navbarDropdown" 
+		                            	href="#" role="button" data-bs-toggle="dropdown" 
+		                            	aria-expanded="false">${user.id} 님</a>
+		                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		                                <li><a class="dropdown-item" href="#!">로그아웃</a></li>
+		                                <li><hr class="dropdown-divider" /></li>
+		                                <li><a class="dropdown-item" href="#!">마이페이지</a></li>
+		                            </ul>
+		                        </li>
+	                    	</ul>
+                    	</c:if>
+                     	
                     </form>
                 </div>
             </div>
@@ -64,15 +75,13 @@
         <section class="py-5">
             <div class="container px-4 px-lg-5 mt-5">
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                 
                  	<c:forEach var="contentVO" items="${pageInfo.pageList}">
                  		<div class="col mb-5 content">
-	                        <div class="card h-100">
-	                            <!-- Sale badge 순위-->
-	                            <!-- <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div> -->
+	                        <div class="card h-100 movie_wrap">
 								<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
-	                            <img class="card-img-top" src=<c:out value="${url}${contentVO.poster_path}" /> 
-	                            						alt="#" width="300" height="400" />
+	                            <a><img class="card-img-top" src=<c:out value="${url}${contentVO.poster_path}" /> 
+	                            						alt="${contentVO.title }" width="300" height="400" /></a>
+	                            <div class="plus"><p><img src="../assets/images/plus.png" alt="#" width="64" height="64"></p></div>
 	                            <div class="position-absolute wishlist" style="top:0.5rem; right:0.5rem;">
 		                            <c:choose>
 		                           		<c:when test="${user != null}">
@@ -88,84 +97,67 @@
 											</c:if>	
 		                           		</c:when>
 		                           		<c:otherwise>
-			                           		<a href="javascript: login_need();" class="wish">
+			                           		<a href="javascript:void(0);" onclick="login_need();" class="wish">
 												<img src="../assets/images/wish.png" alt="찜하기" width="45" height="45" id="heart_icon">
 											</a>
 		                           		</c:otherwise>
 		                           	</c:choose>
 	                           	</div>
-                 
-	                            <!-- Product details-->
 	                            <div class="card-body p-4">
 	                                <div class="text-center">
-	                                    <!-- Product name-->
-	                                    <h5 class="fw-bolder"><c:out value="${contentVO.title }" /></h5>
-	                                    <!-- Product reviews 별점-->
-	                                    <!-- <div class="d-flex justsify-content-center small text-warning mb-2">
-	                                        <div class="bi-star-fill"></div>
-	                                        <div class="bi-star-fill"></div>
-	                                        <div class="bi-star-fill"></div>
-	                                        <div class="bi-star-fill"></div>
-	                                        <div class="bi-star-fill"></div>
-	                                    </div> -->
-	                                    <!-- Product price-->
-	                                    <c:out value="${contentVO.release_date }" /> 
-	                                    <c:out value="${contentVO.vote_average }" />
-	                     
+	                                    <h5 class="fw-bolder movie_idx" title="<c:out value="${contentVO.title }" />"><c:out value="${contentVO.title }" /></h5>
+	                                    <div class="movie_date">
+	                                    	<fmt:formatDate pattern="yyyy MMM" value="${contentVO.release_date }" />
+										</div>
+	                                    <%-- <div class="movie_average"><c:out value="${contentVO.vote_average }" /></div> --%>
+	                                	
 	                                </div>
+	                                
 	                            </div>
-	                            <!-- Product actions 더보기-->
-	                            <!-- <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-	                                <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-	                            </div> -->
 	                        </div>
 	                    </div>
-				    </c:forEach>     
-              		
-              		<div id="pagination">
-						<!-- 변수 매핑 -->
-						<c:set var="action" value="/list" />
-						<c:set var="page" value="${pageInfo.currentPage}" />
-						<c:set var="beginPage" value="${pageInfo.startPage}" />
-						<c:set var="endPage" value="${pageInfo.endPage}" />
-						<c:set var="totalPage" value="${pageInfo.totalPage}" />
-					         
-					    <!-- 처음으로 -->
-						<a href="${action}?page=1">
-								<span>«</span>
-						</a>
-						
-						<!-- 이전버튼 -->
-						<c:if test="${page <= 1}">
-							<span>이전</span>
-						</c:if>
-						<c:if test="${page > 1}">
-							<a href="${action}?page=${page - 1}">이전</a>
+				    </c:forEach>  
+				   
+                </div>
+                <div id="pagination">
+					<!-- 변수 매핑 -->
+					<c:set var="action" value="/list" />
+					<c:set var="page" value="${pageInfo.currentPage}" />
+					<c:set var="beginPage" value="${pageInfo.startPage}" />
+					<c:set var="endPage" value="${pageInfo.endPage}" />
+					<c:set var="totalPage" value="${pageInfo.totalPage}" />
+				    
+				    <ul class="page_wrap">
+				    	<!-- 처음으로 -->
+					    <c:if test="${page != 1 }">
+					    	<li class="skip"><a href="${action}?page=1">처음</a></li>
+					    </c:if>
+					    <!-- 이전버튼 -->
+						<c:if test="${pageInfo.showPrev}">
+							<li class="skip"><a href="${action}?page=${page - 1}">이전</a></li>
 						</c:if>
 					                
 						<!-- 넘버링버튼 for문 -->
 						<c:forEach var="item" varStatus="status" begin="${beginPage}" end="${endPage}" step="1">
 							<c:if test="${page == item}">
-								${item}
+								<li><span>${item}</span></li>
 							</c:if>
 							<c:if test="${page != item}">
-								<a href="${action}?page=${item}">${item}</a>
+								<li><a href="${action}?page=${item}">${item}</a></li>
 							</c:if>
 						</c:forEach>
 					
 						<!-- 다음버튼 -->
-						<c:if test="${page >= totalPage}">
-							<span>다음</span>
+						<c:if test="${pageInfo.showNext}">
+							<li class="skip"><a href="${action}?page=${endPage + 1}">다음</a></li>
 						</c:if>
-						<c:if test="${page < totalPage}">
-							<a href="${action}?page=${page + 1}">다음</a>
-						</c:if>
+					
 						<!-- 끝으로 -->
-						<a href="${action}?page=${totalPage}">
-							<span>»</span>
-						</a>
-					</div>
-                </div>
+						<c:if test="${page != totalPage }">
+							<li class="skip"><a href="${action}?page=${totalPage}">끝</a></li>
+						</c:if>	
+				    </ul>     
+				</div>
             </div>
         </section>
         <!-- Footer-->
@@ -178,36 +170,3 @@
         <script src="js/scripts.js"></script>
     </body>
 </html>
-
-<!-- 
-<div class="col mb-5">
-    <div class="card h-100">
-        주석 Sale badge 순위
-        <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
-        주석 Product image
-        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-        주석 Product details
-        <div class="card-body p-4">
-            <div class="text-center">
-                주석 Product name
-                <h5 class="fw-bolder">Special Item</h5>
-                주석 Product reviews 별점
-                <div class="d-flex justify-content-center small text-warning mb-2">
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                </div>
-                주석 Product price
-                추가정보 <span class="text-muted text-decoration-line-through">$20.00</span>
-                $18.00
-            </div>
-        </div>
-        주석 Product actions 더보기
-        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">Add to cart</a></div>
-        </div>
-    </div>
-</div>
- -->

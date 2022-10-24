@@ -71,6 +71,12 @@ create table comment(
     foreign key (content_id) references contents(content_id)
 );
 
+create table test(
+	test int primary key,
+	user_id varchar(15),
+	constraint test_comment_null_fk foreign key (user_id) references comment (user_id)
+	
+);
 
 select * from user;
 

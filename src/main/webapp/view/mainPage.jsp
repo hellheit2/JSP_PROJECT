@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"  %>
 
 <!DOCTYPE html>
@@ -137,8 +138,8 @@
 					            <div class="movie_idx" title="<c:out value="${contentVO.title }" />">
 					            	<c:out value="${contentVO.title }" />
 					            </div>
-				 	            <div class="movie_date"><c:out value="${contentVO.release_date }" /></div>
-					            <div class="movie_review"><c:out value="${contentVO.vote_average }" /></div>
+				 	            <div class="movie_date"><fmt:formatDate pattern="yyyy MMM" value="${contentVO.release_date }" /></div>
+					            <div class="movie_average"><c:out value="${contentVO.vote_average }" /></div>
 					        </div>
 					    </div>
 				    </c:forEach>

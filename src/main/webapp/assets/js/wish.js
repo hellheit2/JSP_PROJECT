@@ -32,8 +32,9 @@ function like_func(obj){
 			console.log(data);
 			console.log("error");
          }
-     });
-     
-     
-		
+     });		
+}
+
+function login_need(){
+	alert(" 로그인 후 이용하실 수 있습니다.")
 }
