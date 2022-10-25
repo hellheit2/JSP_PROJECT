@@ -21,7 +21,7 @@ import vo.UserVO;
 
 
 @WebServlet(name="listController", value="/list")
-public class ListController extends HttpServlet {
+public class ListController extends ContentController {
 	private static final long serialVersionUID = 1L;
 
 	
@@ -39,8 +39,8 @@ public class ListController extends HttpServlet {
 			page = "1";
 		}
 		
-		TMDBService tmdb = new TMDBServiceImpl();
-		PageResponse<ContentVO> pageInfo = tmdb.getPageContentList(Integer.parseInt(page));
+		/* TMDBService tmdb = new TMDBServiceImpl(); */
+		PageResponse<ContentVO> pageInfo = tmdbService.getPageContentList(Integer.parseInt(page));
 		
 
 		System.out.println(user);
