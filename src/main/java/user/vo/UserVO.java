@@ -1,4 +1,4 @@
-package vo;
+package user.vo;
 
 import java.sql.Timestamp;
 import java.util.List;

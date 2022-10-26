@@ -3,7 +3,7 @@ package util;
 import java.util.Arrays;
 import java.util.List;
 
-import vo.ContentVO;
+import content.vo.ContentVO;
 
 public class PageResponse<E> {
 	private int currentPage; // 현재 페이지

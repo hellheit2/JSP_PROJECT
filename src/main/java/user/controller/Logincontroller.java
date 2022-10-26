@@ -1,4 +1,4 @@
-package controller;
+package user.controller;
 
 import java.io.IOException;
 
@@ -6,17 +6,16 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import service.UserService;
-import vo.UserVO;
+import user.service.UserServiceImpl;
+import user.vo.UserVO;
 
 
 @WebServlet(name = "loginController", value="/login")
-public class Logincontroller extends HttpServlet {
+public class Logincontroller extends UserController {
 	private static final long serialVersionUID = 1L;
 
 	public void init(ServletConfig config) throws ServletException {
@@ -38,7 +37,7 @@ public class Logincontroller extends HttpServlet {
 		String pwd = request.getParameter("userPwd");
 		
 		
-		UserService userService = new UserService();
+		UserServiceImpl userService = new UserServiceImpl();
 		UserVO user = userService.login(id, pwd);
 		
 		RequestDispatcher rd = null;

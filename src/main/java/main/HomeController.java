@@ -1,4 +1,4 @@
-package controller;
+package main;
 
 
 import java.io.IOException;
@@ -13,10 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import service.TMDBService;
-import service.TMDBServiceImpl;
+import content.dao.ContentDAO;
+import content.dao.ContentDAOImpl;
+import content.vo.ContentVO;
 import util.PageResponse;
-import vo.ContentVO;
 
 
 @WebServlet(name="homeController", value="/home")
@@ -28,7 +28,7 @@ public class HomeController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("home");
 		
-		TMDBService tmdb = new TMDBServiceImpl();
+		ContentDAO tmdb = new ContentDAOImpl();
 		PageResponse<ContentVO> pageInfo = tmdb.getPageContentList(1);
 		
 		request.setAttribute("pageInfo",pageInfo);

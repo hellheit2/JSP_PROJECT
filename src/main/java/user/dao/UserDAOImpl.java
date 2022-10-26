@@ -1,4 +1,4 @@
-package dao;
+package user.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,12 +8,13 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import user.vo.UserVO;
 import util.JdbcUtility;
-import vo.UserVO;
 
-public class UserDAO {
+public class UserDAOImpl implements UserDAO{
 
-	public UserVO login(String id, String pwd) {
+	@Override
+	public UserVO getUser(String id, String pwd) {
 		UserVO user = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -48,9 +49,10 @@ public class UserDAO {
 		}
 		return user;
 	}
-	
 
-	public int join(UserVO user) {
+
+	@Override
+	public int addUser(UserVO user) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -76,6 +78,13 @@ public class UserDAO {
 		return cnt;
 	}
 	
+	@Override
+	public int delUser(UserVO user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
+
 	public List<String> getWishListById(String user_id){
 		Connection con = null;
 		PreparedStatement pstmt = null;

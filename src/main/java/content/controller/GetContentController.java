@@ -1,4 +1,4 @@
-package controller;
+package content.controller;
 
 import java.io.IOException;
 
@@ -7,9 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import service.TMDBService;
-import service.TMDBServiceImpl;
-import vo.ContentVO;
+import content.dao.ContentDAO;
+import content.dao.ContentDAOImpl;
+import content.vo.ContentVO;
 
 @WebServlet(name="getContentController", value="/content")
 public class GetContentController extends ContentController {
@@ -23,9 +23,8 @@ public class GetContentController extends ContentController {
 		
 		String id = request.getParameter("id");
 		if(id != null) {
-			TMDBService tmdbService = new TMDBServiceImpl();
-			ContentVO content = tmdbService.getContent(id);
 			
+			ContentVO content = contentService.getContent(id);
 			request.setAttribute("content", content);
 		}
 		request.getRequestDispatcher("/view/content.jsp").forward(request, response);

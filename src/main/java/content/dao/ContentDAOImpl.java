@@ -1,4 +1,4 @@
-package service;
+package content.dao;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -16,11 +16,11 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import content.vo.ContentVO;
 import util.PageRequest;
 import util.PageResponse;
-import vo.ContentVO;
 
-public class TMDBServiceImpl implements TMDBService {
+public class ContentDAOImpl implements ContentDAO {
 
 	// API KEY
 	private final String API_KEY = "5cf3fb46e228d63ef250b0c89399e2b8";

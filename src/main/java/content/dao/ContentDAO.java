@@ -1,14 +1,11 @@
-package service;
+package content.dao;
 
-import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONObject;
-
+import content.vo.ContentVO;
 import util.PageResponse;
-import vo.ContentVO;
 
-public interface TMDBService {
+public interface ContentDAO {
 	
 	// CRUD 기능의 메소드 구현
 	// 컨텐츠 등록

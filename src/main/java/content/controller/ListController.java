@@ -1,4 +1,4 @@
-package controller;
+package content.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,13 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import service.ListService;
-import service.TMDBService;
-import service.TMDBServiceImpl;
+import content.dao.ContentDAO;
+import content.dao.ContentDAOImpl;
+import content.service.ContentServiceImpl;
+import content.vo.ContentVO;
+import user.vo.UserVO;
 import util.PageRequest;
 import util.PageResponse;
-import vo.ContentVO;
-import vo.UserVO;
 
 
 @WebServlet(name="listController", value="/list")
@@ -40,14 +40,13 @@ public class ListController extends ContentController {
 		}
 		
 		/* TMDBService tmdb = new TMDBServiceImpl(); */
-		PageResponse<ContentVO> pageInfo = tmdbService.getPageContentList(Integer.parseInt(page));
+		PageResponse<ContentVO> pageInfo = contentService.getPageContentList(Integer.parseInt(page));
 		
 
 		System.out.println(user);
 		//찜목록 체크
 		if(user != null) {
-			ListService listService = new ListService();
-			listService.setWishListOnPageList(user,pageInfo.getPageList());
+			contentService.setWishListOnPageList(user.getWishList(), pageInfo.getPageList());
 			System.out.println(pageInfo.getPageList().toString());
 		}
 		/*

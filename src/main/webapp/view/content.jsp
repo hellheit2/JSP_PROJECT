@@ -21,5 +21,16 @@
 	<p>${content.vote_count }</p>
 	<p>${content.vote_average }</p>
 	<p>${content.wish }</p>
+	
+	<div class="review_wrap">
+		<c:url var="reviewsPath" value="/reviews" />
+		<form action="${reviewsPath}" method="post">
+		    <textarea rows="5" name="r_content" id="r_content" placeholder="리뷰를 남겨주세요."></textarea>
+		    <input type="hidden" id="contentId" name="content_id" value="${content.id }">
+		    <input type="hidden" id="userId" name="user_id" value="${user.id }">
+	
+		    <button class="btn btn-block btn-primary" type="submit">리뷰 등록</button>
+		</form>
+	</div>
 </body>
 </html>
