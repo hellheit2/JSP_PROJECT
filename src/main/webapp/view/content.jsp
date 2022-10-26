@@ -23,7 +23,7 @@
 	<p>${content.wish }</p>
 	
 	<div class="review_wrap">
-		<c:url var="reviewsPath" value="/reviews" />
+		<c:url var="reviewsPath" value="/review" />
 		<form action="${reviewsPath}" method="post">
 		    <textarea rows="5" name="r_content" id="r_content" placeholder="리뷰를 남겨주세요."></textarea>
 		    <input type="hidden" id="contentId" name="content_id" value="${content.id }">
