@@ -23,7 +23,16 @@ import util.PageResponse;
 public class ContentDAOImpl implements ContentDAO {
 
 	// API KEY
-	private final String API_KEY = "5cf3fb46e228d63ef250b0c89399e2b8";
+	private static final String API_KEY = "5cf3fb46e228d63ef250b0c89399e2b8";
+	
+	public static Map<Integer, String> genreMap = null;
+	
+	
+	public ContentDAOImpl() {
+		if(genreMap == null) {
+			genreMap = genreList("movie");
+		}
+	}
 	
 	@Override
 	public void insertBoard(ContentVO vo) {
@@ -103,16 +112,18 @@ public class ContentDAOImpl implements ContentDAO {
 			
 			
 			
-			List<Integer> genreList = new ArrayList<Integer>();
+			List<String> genreList = new ArrayList<String>();
 			// 장르 id를 List<integer> 형태로 저장 → 장르 비교를 위한 작업
 			JSONArray genre_list = (JSONArray) jsonObject.get("genres");
 			if(genre_list != null) {
 				for (int k = 0; k < genre_list.size(); k++) {
 					JSONObject genre = (JSONObject) genre_list.get(k);
-					genreList.add(Integer.parseInt(genre.get("id").toString()));
+					String genreStr = genreMap.get(Integer.parseInt(genre.get("id").toString()));
+							
+					genreList.add(genreStr);
 				}
 			}
-			content.setGenre_ids(genreList);
+			content.setGenre_list(genreList);
 				
 			
 		} catch (Exception e) {
@@ -199,14 +210,16 @@ public class ContentDAOImpl implements ContentDAO {
 				}
 				
 				
-				List<Integer> genreList = new ArrayList<Integer>();
+				List<String> genreList = new ArrayList<String>();
 				// 장르 id를 List<integer> 형태로 저장 → 장르 비교를 위한 작업
 				JSONArray genre_list = (JSONArray) content.get("genre_ids");
 				for (int k = 0; k < genre_list.size(); k++) {
-					genreList.add(Integer.parseInt(String.valueOf(genre_list.get(k))));
+					String genreStr = genreMap.get(Integer.parseInt(String.valueOf(genre_list.get(k))));
+							
+					genreList.add(genreStr);
 				}
 				
-				temp.setGenre_ids(genreList);
+				temp.setGenre_list(genreList);
 			
 				contentList.add(temp);
 			}

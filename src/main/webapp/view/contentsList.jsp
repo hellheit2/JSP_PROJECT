@@ -21,7 +21,28 @@
         <link href="../assets/css/wish.css" rel="stylesheet" />
         <script src="../assets/js/jquery-3.6.0.min.js"></script>
         <script src="../assets/js/wish.js"></script>
-    <script src="../assets/js/modal.js"></script>
+    	<script src="../assets/js/modal.js"></script>
+    	<style>
+    	
+    		#my_modal{
+    			border-radius:10px;
+    			overflow:hidden;
+    			outline:none;
+    			border:none;
+    			overflow:scroll;
+    			-ms-overflow-style:none;
+    		}
+
+			#my_modal::-webkit-scrollbar { 
+			    display: none;
+			    width: 0 !important;
+			}
+			
+			.modal_close_btn{
+				margin:5px;
+			}
+    	
+    	</style>
     </head>
     <body>
         <!-- Navigation-->
@@ -73,9 +94,9 @@
             </div>
         </header>
         
-        <div id="my_modal">
-		    <iframe src="/content" id="chat_iframe">대체 내용</iframe>
-		    <a class="modal_close_btn">닫기</a>
+        <div id="my_modal" style="width:600px;height:100%;margin:0;padding:0;">
+		    <iframe src="/content" id="content_detail" style="width:620px;height:100%;">대체 내용</iframe>
+		    <a class="modal_close_btn"><img src="../assets/images/menu_close.png" alt="닫기" width="30" height="30"></a>
 		</div>
         
         <!-- Section-->

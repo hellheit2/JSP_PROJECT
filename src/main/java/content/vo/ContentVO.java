@@ -12,7 +12,7 @@ public class ContentVO {
 	private String poster_path; 		// 포스터(목록용)
 	private String backdrop_path;	 	// 포스터(배경용)
 	private Date release_date;  		// 개봉일
-	private List<Integer> genre_ids; 	// 장르
+	private List<String> genre_list; 	// 장르
 	private int vote_count;				// 추천 수(api)
 	private float vote_average; 		// 추천 평균(api)
 	private boolean wish; 			// 찜하기
@@ -22,7 +22,7 @@ public class ContentVO {
 	
 
 	public ContentVO(String id, String title, String original_title, String overview, String poster_path,
-			String backdrop_path, Date release_date, List<Integer> genre_ids, int vote_count, float vote_average) {
+			String backdrop_path, Date release_date, List<String> genre_list, int vote_count, float vote_average) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -31,7 +31,7 @@ public class ContentVO {
 		this.poster_path = poster_path;
 		this.backdrop_path = backdrop_path;
 		this.release_date = release_date;
-		this.genre_ids = genre_ids;
+		this.genre_list = genre_list;
 		this.vote_count = vote_count;
 		this.vote_average = vote_average;
 		this.wish = false;
@@ -93,12 +93,12 @@ public class ContentVO {
 		this.release_date = date;
 	}
 
-	public List<Integer> getGenre_ids() {
-		return genre_ids;
+	public List<String> getGenre_list() {
+		return genre_list;
 	}
 
-	public void setGenre_ids(List<Integer> genre_ids) {
-		this.genre_ids = genre_ids;
+	public void setGenre_list(List<String> genre_ids) {
+		this.genre_list = genre_ids;
 	}
 
 	public int getVote_count() {
@@ -131,7 +131,7 @@ public class ContentVO {
 	public String toString() {
 		return "ContentVO [id=" + id + ", title=" + title + ", original_title=" + original_title + ", overview="
 				+ overview + ", poster_path=" + poster_path + ", backdrop_path=" + backdrop_path + ", release_date="
-				+ release_date + ", genre_ids=" + genre_ids + ", vote_count=" + vote_count + ", vote_average="
+				+ release_date + ", genre_ids=" + genre_list + ", vote_count=" + vote_count + ", vote_average="
 				+ vote_average + ", wish=" + wish + "]";
 	}
 
