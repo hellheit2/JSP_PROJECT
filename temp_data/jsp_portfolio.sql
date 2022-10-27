@@ -32,7 +32,6 @@ drop table if exists genre;
 create table genre(
     genre_name varchar(10),
     content_id varchar(15),
-    foreign key (content_id) references contents(content_id),
     primary key(content_id, genre_name)
 );
 
@@ -41,7 +40,6 @@ drop table if exists platform;
 create table platform(
     platform_name varchar(10),
     content_id varchar(15),
-    foreign key (content_id) references contents(content_id),
     primary key(content_id, platform_name)
 );
 
@@ -51,8 +49,6 @@ drop table if exists wish;
 create table wish(
     user_id varchar(15),
 	content_id varchar(15),
-    foreign key (user_id) references user(user_id),
-    -- foreign key (content_id) references contents(content_id),
     primary key(content_id)   
 );
 
@@ -67,8 +63,9 @@ create table comment(
     comment_body text,
     rate float,
     write_date date default now(),
-    foreign key (user_id) references user(user_id),
-    foreign key (content_id) references contents(content_id)
+    update_date date default now(),
+    comment_like int,
+    comment_dislike int
 );
 
 
@@ -81,3 +78,10 @@ values ('test','960704');
 select content_id from wish where user_id = 'test'
 
 select * from wish;
+
+insert into comment (user_id, content_id, comment_body) 
+values ('test','960704', '재밌어요!');
+insert into comment (user_id, content_id, comment_body) 
+values ('test','960704', '보다 잤어요');
+insert into comment (user_id, content_id, comment_body) 
+values ('test','960704', '잘 보고 왔습니다');

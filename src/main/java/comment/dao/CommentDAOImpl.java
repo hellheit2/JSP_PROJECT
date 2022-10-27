@@ -73,8 +73,8 @@ public class CommentDAOImpl implements CommentDAO{
 				String commentBody = rs.getString("comment_body");
 				Timestamp writeDate = rs.getTimestamp("write_date");
 				Timestamp updateDate = rs.getTimestamp("update_date");
-				int like = rs.getInt("like");
-				int dislike = rs.getInt("dislike");
+				int like = rs.getInt("comment_like");
+				int dislike = rs.getInt("comment_dislike");
 				
 				comment = new CommentVO(commentId,userId,contentId,commentBody,writeDate,updateDate,like,dislike);
 			}

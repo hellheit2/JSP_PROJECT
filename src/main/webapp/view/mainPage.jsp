@@ -71,7 +71,7 @@
                         	<input type="button" value="회원가입" class="login2" onclick="modalClick(this);" id="join">
                         </c:if>
                          <c:if test="${not empty user}">
-                        	<input type="button" value="로그아웃" class="login1" onclick="modalClick(this);" id="logout">
+                        	<input type="button" value="로그아웃" class="login1" onclick="" id="logout">
                         	<input type="button" value="마이페이지" class="login2" onclick="modalClick(this);" id="myPage">
                         </c:if>
                     </form>
