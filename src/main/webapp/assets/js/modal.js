@@ -45,10 +45,19 @@ Element.prototype.setStyle = function(styles) {
 };
 
 function modalClick(elem){
-	console.log(elem.getAttribute('id') + '_modal');
-	elem.addEventListener('click', function() {
-	    // 모달창 띄우기
-	    console.log("click");
-	    modal(elem.getAttribute('id') + '_modal');
-	});
+	
+	var target = elem.getAttribute('id') + '_modal';
+	console.log(target);
+	
+	modal(target);
+}
+
+function get_content(target, id){
+	console.log(id);
+	
+	console.log(target);
+	document.getElementById('my_modal').childNodes[1].setAttribute("src","/content?id="+id);
+	
+	modal('my_modal');
+	
 }

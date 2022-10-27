@@ -2,6 +2,9 @@
 -------------------------------------------------- */
 /* Padding below the footer and lighter body text */
 
+html{
+	overflow:scroll;
+}
 body {
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -28,14 +31,14 @@ body {
 
 /* Declare heights because of positioning of img element */
 .carousel-item {
-  height: 32rem;
+  height: 653px;
 }
 .carousel-item > img {
   position: absolute;
   top: 0;
   left: 0;
   min-width: 100%;
-  height: 32rem;
+  height: 653px;
 }
 
 
@@ -97,31 +100,28 @@ body {
 }
 
 #wrap{width: 1500px;  margin: 0 auto;}
-#wrap > h2{width: 240px; float: left; border-bottom: 2px dashed #d5ae2e; padding-bottom: 10px;}
-.plus_btn a{float:right;  display: inline-block; width: 80px; height: 50px; 
-  background-color: yellowgreen; border-radius: 10px; 
-  font-size: 20px; list-style: none; margin-bottom: 20px; 
-  color: #333; line-height: 50px;}
-
+#wrap>h2{width: 240px; float: left; border-bottom: 2px dashed #d5ae2e; padding-bottom: 10px;}
+.plus_btn a{float:right;  display: inline-block;  
+  font-size: 20px;  margin-bottom: 20px;  }
+  
 .banner{
-  background-image: url(../images/maxresdefault.jpg); 
+  background-image: url(../images/movie5.jpg); 
   background-repeat: no-repeat;
-background-size: contain;}
+background-size: 1500px 653px;}
 .banner1{
-  background-image: url(../images/maxresdefault.jpg); 
+  background-image: url(../images/movie2.jpg); 
   background-repeat: no-repeat;
-background-size: contain;}
+  background-size: 1500px 653px;}
 
 .banner2{
-  background-image: url(../images/maxresdefault.jpg); 
+  background-image: url(../images/movie7.jpg); 
   background-repeat: no-repeat;
-background-size: contain;}
+  background-size: 1500px 653px;}
 
 
 
-.login1{margin-left:10px; border-radius: 10px;}
-.login2{border-radius: 10px;}
-.login1:hover , .login2:hover{background-color: #5bf8a4;}
+.login1{margin:0 5px;}
+.login1:hover , .login2:hover{background-color: #545454; color: #ffffff;}
 
 .movie_container{clear:both;  width: 1500px; height: 600px;  margin: 0 auto;}
 .movie1 .movie_poster{float: left; margin-right: 15px;}

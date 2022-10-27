@@ -20,9 +20,29 @@
         <link href="../assets/css/contentList_add.css" rel="stylesheet" />
         <link href="../assets/css/wish.css" rel="stylesheet" />
         <script src="../assets/js/jquery-3.6.0.min.js"></script>
-        
         <script src="../assets/js/wish.js"></script>
-    
+    	<script src="../assets/js/modal.js"></script>
+    	<style>
+    	
+    		#my_modal{
+    			border-radius:10px;
+    			overflow:hidden;
+    			outline:none;
+    			border:none;
+    			overflow:scroll;
+    			-ms-overflow-style:none;
+    		}
+
+			#my_modal::-webkit-scrollbar { 
+			    display: none;
+			    width: 0 !important;
+			}
+			
+			.modal_close_btn{
+				margin:5px;
+			}
+    	
+    	</style>
     </head>
     <body>
         <!-- Navigation-->
@@ -74,9 +94,9 @@
             </div>
         </header>
         
-        <div id="my_modal">
-		    <iframe src="/content" id="chat_iframe">대체 내용</iframe>
-		    <a class="modal_close_btn">닫기</a>
+        <div id="my_modal" style="width:600px;height:100%;margin:0;padding:0;">
+		    <iframe src="/content" id="content_detail" style="width:620px;height:100%;">대체 내용</iframe>
+		    <a class="modal_close_btn"><img src="../assets/images/menu_close.png" alt="닫기" width="30" height="30"></a>
 		</div>
         
         <!-- Section-->
@@ -88,32 +108,35 @@
 	                       <%--  <div class="card h-100 movie_wrap" onclick="location.href='/content?id=${contentVO.id}'">
 								<c:set var="url" value="https://image.tmdb.org/t/p/w500/" /> --%>
 							<div class="card h-100 movie_wrap" onclick="get_content(this,${contentVO.id })">
-								<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
 								
+	                           	
+	                           	<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
 	                            <p><img class="card-img-top" src=<c:out value="${url}${contentVO.poster_path}" /> 
 	                            						alt="${contentVO.title }" width="300" height="400" /></p>
 	                            <div class="plus"><p><img src="../assets/images/plus.png" alt="#" width="64" height="64"></p></div>
-	                            <div class="position-absolute wishlist" style="top:0.5rem; right:0.5rem;">
+	                            
+								<div class="position-absolute wishlist" style="top:0.5rem; right:0.5rem;">
 		                            <c:choose>
 		                           		<c:when test="${user != null}">
 		                           			<c:if test="${contentVO.wish == false}">
-								            	<a href="javascript:void(0);" onclick="like_func(this);" class="wish">
+								            	<div onclick="like_func(event, this);" class="wish">
 													<img src="../assets/images/wish.png" alt="찜하기" width="45" height="45" id="heart_icon" data-content=<c:out value="${contentVO.id }" />>
-												</a>
+												</div>
 								            </c:if>
 								            <c:if test="${contentVO.wish == true}">
-								            	<a href="javascript:void(0);" onclick="like_func(this);" class="wish">
+								            	<div onclick="like_func(event, this);" class="wish">
 													<img src="../assets/images/wish_checked.png" alt="찜하기" width="45" height="45" id="heart_icon" data-content=<c:out value="${contentVO.id }" />>
-												</a>
+												</div>
 											</c:if>	
 		                           		</c:when>
 		                           		<c:otherwise>
-			                           		<a href="javascript:void(0);" onclick="login_need();" class="wish">
+			                           		<div onclick="login_need(event);" class="wish">
 												<img src="../assets/images/wish.png" alt="찜하기" width="45" height="45" id="heart_icon">
-											</a>
+											</div>
 		                           		</c:otherwise>
 		                           	</c:choose>
 	                           	</div>
+	                            
 	                            <div class="card-body p-4">
 	                                <div class="text-center">
 	                                    <h5 class="fw-bolder movie_idx" title="<c:out value="${contentVO.title }" />"><c:out value="${contentVO.title }" /></h5>
