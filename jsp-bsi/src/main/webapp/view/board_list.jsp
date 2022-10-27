@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -38,8 +38,8 @@
 					<tr>
 						<td>${vo.board_id }</td>
 						<td>${vo.writer}</td>
-						<td><a href="getBoard.view?board_id=${vo.board_id }">${vo.title }</a></td>
-						<%-- <td><fmt:formatDate value="${vo.joinDate }" pattern="yyyy년 MM월dd일 HH시 mm분 ss초" /></td> --%>
+						<td><a href="getboard.do?board_id=${vo.board_id }">${vo.title }</a></td>
+						<td><fmt:formatDate value="${vo.joinDate }" pattern="yyyy/MM/dd" /></td>
 						<%-- <td>${vo.hit }</td> --%>
 					</tr>
 				</c:forEach>

@@ -9,6 +9,7 @@ public class BoardVO {
 	   private String title; // 게시글 제목
 	   private String content; // 내용
 	   private Date joinDate;
+	   private String imageFileName;
 	   public int getBoard_id() {
 		return board_id;
 	}
@@ -45,11 +46,18 @@ public class BoardVO {
 	public void setJoinDate(Date joinDate) {
 		this.joinDate = joinDate;
 	}
+	public String getImageFileName() {
+		return imageFileName;
+	}
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
 	@Override
 	public String toString() {
 		return "BoardVO [board_id=" + board_id + ", contents_id=" + contents_id + ", writer=" + writer + ", title="
-				+ title + ", content=" + content + ", joinDate=" + joinDate + "]";
+				+ title + ", content=" + content + ", joinDate=" + joinDate + ", imageFileName=" + imageFileName + "]";
 	}
+	
 	 
 	   
 	   

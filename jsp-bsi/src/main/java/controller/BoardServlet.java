@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,15 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import service.Command;
+import service.DeleteImpl;
+import service.GetBoardImpl;
 import service.GetListImpl;
 import service.InsertImpl;
+import service.UpdateImpl;
 import vo.BoardVO;
 
 
 @WebServlet("*.do")
 public class BoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	private static String ARTICLE_IMAGE_REPO = "..\\..\\webapp\\assets\\images";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -57,7 +61,15 @@ public class BoardServlet extends HttpServlet {
 		  request.getRequestDispatcher("board_list.jsp").forward(request, response);
 		 
 		  } else if(command.equals("/view/write.do")) { // 글작성 화면요청
-		  
+				/*
+				 * BoardVO boardVO = new BoardVO(); Map<String, String> articleMap =
+				 * upload(request,response); String title = articleMap.get("title"); String
+				 * content = articleMap.get("content"); String imageFileName =
+				 * articleMap.get("imageFileName");
+				 * 
+				 * boardVO.setTitle(title); boardVO.setContent(content);
+				 * boardVO.setImageFileName(imageFileName);
+				 */
 		  request.getRequestDispatcher("write.jsp").forward(request, response);
 		  System.out.println("글쓰기"); 
 		  } else if(command.equals("/view/insert.do")) { 
@@ -67,12 +79,48 @@ public class BoardServlet extends HttpServlet {
 		  service.execute(request, response);
 		  
 		  response.sendRedirect("list.do"); // 리다이렉트는 다시 컨트롤러를 태울때 사용합니다.
-		  System.out.println("글쓰기완려"); }
+		  System.out.println("글쓰기완려"); 
+		  
+		  }else if(command.equals("/view/getboard.do")){
+			  System.out.println("글보기1?");
+		  service = new GetBoardImpl();
+		  service.execute(request, response);
+		  
+		  request.getRequestDispatcher("board_content.jsp").forward(request, response);
+		  System.out.println("글보기?");
+		  
+		  }else if(command.equals("/view/updateBoard.do")) {
+			  System.out.println("글수정1");
+			  service = new GetBoardImpl();
+			  service.execute(request, response);
+			  request.getRequestDispatcher("board_modify.jsp").forward(request, response);
+		  }else if(command.equals("/view/update.do")){
+			  service = new UpdateImpl();
+			  service.execute(request, response);
+			  response.sendRedirect("getboard.do?board_id="+request.getParameter("board_id"));
+		  
+		  }else if(command.equals("/view/deleteBoard.do")) {
+			  System.out.println("삭제1");
+			  service = new DeleteImpl();
+			  service.execute(request, response);
+			  System.out.println("삭제2");
+			  response.sendRedirect("list.do");
+			  System.out.println("삭제3");
+		  }
+		  
+		  
+		  		
 		 
 		
 		
 		 
 	
 	}
+	private Map<String, String> upload(HttpServletRequest var1, HttpServletResponse var2) throws ServletException, IOException {
+        throw new Error("Unresolved compilation problems: \n\tThe type String is not visible\n\tThe type String is not visible\n\tThe type String is not visible\n");
+    }
+
+
+
 
 }

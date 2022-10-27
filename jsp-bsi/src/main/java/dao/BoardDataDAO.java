@@ -31,11 +31,11 @@ public class BoardDataDAO {
 	
 	
 	
-	private final String BOARD_INSERT = "insert into board(writer,title,content) values('?','?','?')";
+	private final String BOARD_INSERT = "insert into board(writer,title,content) values(?,?,?)";
 	
 	private final String BOARD_UPDATE = "update board set title=?, content=? where board_id=?";
 	
-	private final String BOARD_DELETE = "delete board where board_id=?";
+	private final String BOARD_DELETE = "delete from board where board_id=?";
 	
 	private final String BOARD_GET = "select * from board where board_id=?";
 	

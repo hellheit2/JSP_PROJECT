@@ -31,6 +31,7 @@
 					<textarea rows="10" style="width: 95%;" name="content"></textarea>
 				</td>
 			</tr>
+			<!-- <form method="post" encType="multipart/form-data" action></form> -->
 			<tr>
 				<td colspan="2">
 					<input type="submit" value="작성 완료" >
