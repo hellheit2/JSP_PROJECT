@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>댓글창</title>
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/comment.css">
+</head>
+<body>
+    <div id="comment_wrap">
+        <div class="mov_img">
+            <img src="../assets/images/adam3.jpg" alt="#" width="600" height="300">
+        </div>
+        <div class="poster_info">
+        <p class="poster_img"><img src="../assets/images/adam2.jpg" alt="" width="150" height="200"></p>
+        <div class="mov_info">
+            <h3>영화제목</h3>
+            <div class="summary1">
+                 2020 ㆍ 
+                 범죄/스릴러 ㆍ 
+                 미국
+            </div>
+            <p class="star"></p>
+            <div class="summary2">
+                <span>기본정보</span><br>
+                줄거리 샬라샬라샬라샬라샬샬라샬샬라샬라샬라샬샬
+            </div>
+        
+        </div>
+    </div>
+    <form id="comments" method="post" action="/review">
+        <div>댓글</div>
+        <input type = "text" placeholder = "감상평을 남겨주세요!!">
+        <button type="submit"> 등록</button>
+    </form>
+    <div class="comments_wrap">
+        <ul class="comments">
+            <li>
+                <div class="userid"> 😊username**** </div>
+                <div class="user_com"> 
+                    댓글입니당 댓글입니당댓글입니당댓글입니당댓글입니당댓글입니 댓글입니당 댓글입니당댓글입니당댓글입니당댓글입니당댓글입니댓글입니당 댓글입니당댓글입니당댓글입니당댓글입니당댓글입니당댓글입니당댓글입니당댓글입니당댓글입니당ㄴ
+                </div>
+                <sapn class="time"> 2018-03-22 23:29:22 </sapn>
+                <div class="button">
+                <button>
+                    <img src = '../assets/images/review_good.png' width="20"> 0
+                </button>
+                <button>
+                    <img src = '../assets/images/bad_review_icon.png' width="20"> 0
+                </button>
+            </div>
+            </li>
+        </ul>
+    </div>
+   </div>
+
+
+</body>
+</html>
