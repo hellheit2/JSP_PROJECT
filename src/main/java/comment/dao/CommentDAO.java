@@ -15,4 +15,11 @@ public interface CommentDAO {
 	public int deleteComment(int comment_id);
 	
 	public int updateComment(CommentVO comment);
+
+	public List<Integer> getLikeList(String user_id);
+	
+	public int updateLikeCount(CommentVO comment, int num);
+	
+	public int updateLike(String user_id, int comment_id, boolean status);
+
 }

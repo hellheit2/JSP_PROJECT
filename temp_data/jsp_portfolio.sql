@@ -9,7 +9,7 @@ create table user(
     pwd varchar(20) not null,
     name varchar(15) not null,
     email varchar(50),
-    joinDate date default now()
+    joinDate datetime default now()
 );
 
 insert into user (user_id, pwd, name, email) 
@@ -17,7 +17,7 @@ values ('test','test','kim', 'test@naver.com');
 
 
 drop table if exists contents;
--- 회원 테이블 생성
+-- 컨텐츠 테이블 생성
 create table contents(
     content_id varchar(15) not null primary key,
     title varchar(15) not null,
@@ -28,7 +28,7 @@ create table contents(
 );
 
 drop table if exists genre;
--- 회원 테이블 생성
+-- 장르 테이블 생성
 create table genre(
     genre_name varchar(10),
     content_id varchar(15),
@@ -36,7 +36,7 @@ create table genre(
 );
 
 drop table if exists platform;
--- 회원 테이블 생성
+-- 플랫폼 테이블 생성
 create table platform(
     platform_name varchar(10),
     content_id varchar(15),
@@ -45,16 +45,16 @@ create table platform(
 
 
 drop table if exists wish;
--- 회원 테이블 생성
+-- 찜목록 테이블 생성
 create table wish(
     user_id varchar(15),
 	content_id varchar(15),
-    primary key(content_id)   
+    primary key(user_id,content_id)   
 );
 
 
 drop table if exists comment;
--- 회원 테이블 생성
+-- 댓글 테이블 생성
 create table comment(
     comment_id int auto_increment not null primary key,
     user_id varchar(15),
@@ -62,10 +62,10 @@ create table comment(
     parent_comment int default 0,
     comment_body text,
     rate float,
-    write_date date default now(),
-    update_date date default now(),
-    comment_like int,
-    comment_dislike int
+    write_date datetime default now(),
+    update_date datetime default now(),
+    comment_like int default 0,
+    is_like int default 0
 );
 
 
@@ -85,3 +85,15 @@ insert into comment (user_id, content_id, comment_body)
 values ('test','960704', '보다 잤어요');
 insert into comment (user_id, content_id, comment_body) 
 values ('test','960704', '잘 보고 왔습니다');
+
+select * from comment where content_id = 960704 order by comment_id desc;
+
+
+drop table if exists comment_like;
+-- 댓글 좋아요 테이블 생성
+create table comment_like(
+    user_id varchar(15),
+    comment_id int(15),
+	primary key(user_id,comment_id)   
+);
+

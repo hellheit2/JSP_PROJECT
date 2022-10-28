@@ -19,6 +19,7 @@
         <link href="../assets/css/contentList.css" rel="stylesheet" />
         <link href="../assets/css/contentList_add.css" rel="stylesheet" />
         <link href="../assets/css/wish.css" rel="stylesheet" />
+        <link rel="stylesheet" href="../assets/css/modalLoginJoin.css">
         <script src="../assets/js/jquery-3.6.0.min.js"></script>
         <script src="../assets/js/wish.js"></script>
     	<script src="../assets/js/modal.js"></script>
@@ -45,6 +46,7 @@
     	</style>
     </head>
     <body>
+	    
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container px-4 px-lg-5">
@@ -58,10 +60,10 @@
                     <form class="d-flex">
                     
                     	<c:if test="${empty user }">
-	                    	<button class="btn btn-outline-dark" type="submit">
+	                    	<button class="btn btn-outline-dark login1" type="button" onclick="modalClick(this);" id="login">
 	                            로그인
 	                        </button>
-	                        <button class="btn btn-outline-dark" type="submit">
+	                        <button class="btn btn-outline-dark login2" type="button" onclick="modalClick(this);" id="join">
 	                            회원가입
 	                        </button>
                     	</c:if>
@@ -72,14 +74,13 @@
 		                            	href="#" role="button" data-bs-toggle="dropdown" 
 		                            	aria-expanded="false">${user.id} 님</a>
 		                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-		                                <li><a class="dropdown-item" href="#!">로그아웃</a></li>
+		                                <li><a class="dropdown-item" href="javascript:void(0)" onclick='location.href="/logout";' id="logout">로그아웃</a></li>
 		                                <li><hr class="dropdown-divider" /></li>
 		                                <li><a class="dropdown-item" href="#!">마이페이지</a></li>
 		                            </ul>
 		                        </li>
 	                    	</ul>
                     	</c:if>
-                     	
                     </form>
                 </div>
             </div>
@@ -94,8 +95,11 @@
             </div>
         </header>
         
-        <div id="my_modal" style="width:600px;height:100%;margin:0;padding:0;">
-		    <iframe src="/content" id="content_detail" style="width:620px;height:100%;">대체 내용</iframe>
+        <%@ include file = "./modalLogin.jsp" %>
+		<%@ include file = "./modalJoin.jsp" %>
+		
+        <div id="my_modal" style="width:600px;height:900px;margin:0;padding:0;">
+		    <iframe src="/content" id="content_detail" style="width:620px;height:900px;">대체 내용</iframe>
 		    <a class="modal_close_btn"><img src="../assets/images/menu_close.png" alt="닫기" width="30" height="30"></a>
 		</div>
         

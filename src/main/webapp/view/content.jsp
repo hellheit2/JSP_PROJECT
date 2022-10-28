@@ -17,11 +17,9 @@
 		
 		console.log("start : ");
 		console.log(${content.id});
-	    let commentList = getReviewList(${content.id });
+	    let commentList = getReviewList(${content.id },1);
 	    console.log(${content.id });
 	    
-		
-		
 	  
 	}); //document.ready
 	function isEmpty(str){
@@ -31,15 +29,15 @@
 		else
 			return false ;
 	}
-	function getReviewList(contentId){
+	function getReviewList(contentId, page){
 		let reviewList;
 		
-		console.log( '/comment/list?content='+ contentId);
+		console.log( '/comment/list?content='+ contentId + '&page=' + page);
 		
 		if(!isEmpty(contentId)){
 			console.log(contentId);
 			 $.ajax({
-		        url: '/comment/list?content='+ contentId,
+		        url: '/comment/list?content='+ contentId + '&page=' + page,
 		        type: 'GET',
 		        headers: {"content-type":"application/json"},
 		        success : function(result){
@@ -109,10 +107,10 @@
 		<input type="hidden" id="contentId" name="content_id" value="${content.id }">
 		<input type="hidden" id="userId" name="user_id" value="${user.id }">
 		<button type="submit"> 등록</button>
-	 </form>
+	</form>
  
- 	<div id="comments_wrap"></div>
- 
+	<div id="comments_wrap"></div>
+ 	
 </div>
 	
 	

@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <script src="../assets/js/jquery-3.6.0.min.js"></script>
     <script src="../assets/js/modal.js"></script>
-    <link rel="stylesheet" href="../assets/css/modal_test.css">
+    <link rel="stylesheet" href="../assets/css/modalLoginJoin.css">
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/carousel/">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
@@ -45,35 +45,40 @@
 	<%@ include file = "./modalJoin.jsp" %>
     
     <header>
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">영화리뷰사이트</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="#">영화</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " href="#">TV</a>
-                        </li>
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container px-4 px-lg-5">
+                <a class="navbar-brand" href="#!">영화리뷰사이트</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                        <li class="nav-item"><a class="nav-link active" aria-current="page" href="/home">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
                     </ul>
                     <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                        <c:if test="${empty user}">
-                        	<input type="button" value="로그인" class="login1" onclick="modalClick(this);" id="login">
-                        	<input type="button" value="회원가입" class="login2" onclick="modalClick(this);" id="join">
-                        </c:if>
-                         <c:if test="${not empty user}">
-                        	<input type="button" value="로그아웃" class="login1" onclick="" id="logout">
-                        	<input type="button" value="마이페이지" class="login2" onclick="modalClick(this);" id="myPage">
-                        </c:if>
+                    
+                    	<c:if test="${empty user }">
+	                    	<button class="btn btn-outline-dark login1" type="button" onclick="modalClick(this);" id="login">
+	                            로그인
+	                        </button>
+	                        <button class="btn btn-outline-dark login2" type="button" onclick="modalClick(this);" id="join">
+	                            회원가입
+	                        </button>
+                    	</c:if>
+                    	<c:if test="${not empty user }">
+	                    	<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+		                    	<li class="nav-item dropdown">
+		                            <a class="nav-link dropdown-toggle" id="navbarDropdown" 
+		                            	href="#" role="button" data-bs-toggle="dropdown" 
+		                            	aria-expanded="false">${user.id} 님</a>
+		                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+		                                <li><a class="dropdown-item" href="javascript:void(0)" onclick='location.href="/logout";' id="logout">로그아웃</a></li>
+		                                <li><hr class="dropdown-divider" /></li>
+		                                <li><a class="dropdown-item" href="#!">마이페이지</a></li>
+		                            </ul>
+		                        </li>
+	                    	</ul>
+                    	</c:if>
                     </form>
                 </div>
             </div>
@@ -125,29 +130,31 @@
             <h2>💛리뷰 랭킹💛</h2>
             <p class="plus_btn"><a href="/list">+더보기</a></p>
             <div class="movie_container">
-            	<div class="movie1">
-	            	<c:forEach var="contentVO" items="${pageInfo.pageList}" begin="0" end="10">
-					    <div class="movie_poster">
-					        <div class="movie_wrap">
-					        	<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
-					            <a href="#"><img src="<c:out value='${url}${contentVO.poster_path}' />" alt="#" width="288" height="400"></a>
-					            <div class="plus"><p><img src="../assets/images/plus.png" alt="#" width="64" height="64"></p></div>
-					        </div>
-					        <div class="movie_ex1">
-					            <div class="movie_idx" title="<c:out value="${contentVO.title }" />">
-					            	<c:out value="${contentVO.title }" />
-					            </div>
-				 	            <div class="movie_date"><c:out value="${contentVO.release_date }" /></div>
-					            <div class="movie_review"><c:out value="${contentVO.vote_average }" /></div>
-					        </div>
-					    </div>
-				    </c:forEach>
-				    <script>
-						var dateList = document.getElementsByClassName('movie_date');
-						Array.from(dateList).forEach(function(date){
-							date.innerHTML = date.innerHTML.slice(-4);	
-						});
-					</script>
+            	<div class="movie_overflow">
+	            	<div class="movie1">
+		            	<c:forEach var="contentVO" items="${pageInfo.pageList}" begin="0" end="10">
+						    <div class="movie_poster">
+						        <div class="movie_wrap">
+						        	<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
+						            <a href="#"><img src="<c:out value='${url}${contentVO.poster_path}' />" alt="#" width="288" height="400"></a>
+						            <div class="plus"><p><img src="../assets/images/plus.png" alt="#" width="64" height="64"></p></div>
+						        </div>
+						        <div class="movie_ex1">
+						            <div class="movie_idx" title="<c:out value="${contentVO.title }" />">
+						            	<c:out value="${contentVO.title }" />
+						            </div>
+					 	            <div class="movie_date"><c:out value="${contentVO.release_date }" /></div>
+						            <div class="movie_review"><c:out value="${contentVO.vote_average }" /></div>
+						        </div>
+						    </div>
+					    </c:forEach>
+					    <script>
+							var dateList = document.getElementsByClassName('movie_date');
+							Array.from(dateList).forEach(function(date){
+								date.innerHTML = date.innerHTML.slice(-4);	
+							});
+						</script>
+					</div>
 				</div>
             </div>
         </div>

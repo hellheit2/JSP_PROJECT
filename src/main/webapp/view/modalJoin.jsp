@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 
-
-<title>회원가입창</title>
 <link rel="stylesheet" href="../assets/css/join.css">
 <div id="join_modal">
     <div class="wrapper">
         <div class="title"><span>회원가입</span></div>
-        <form method="post" action="/join">
+        <form method="post" action="/join" class="joinForm">
             <div class="form-group">
                 <label for="u_name" class="fas fa-user">이름</label>
                 <input type="text" placeholder="Name" name="name" autocomplete="off" maxlength="10" required>

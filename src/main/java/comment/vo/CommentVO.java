@@ -12,17 +12,18 @@ public class CommentVO {
 	Timestamp write_date;
 	Timestamp update_date;
 	int like;
-	int dislike;
+	boolean isLike;
 		
 	public CommentVO(String user_id, String content_id, String comment_body) {
 		super();
 		this.user_id = user_id;
 		this.content_id = content_id;
 		this.comment_body = comment_body;
+		this.like = 0;
 	}
 
 	public CommentVO(int comment_id, String user_id, String content_id, String comment_body, Timestamp write_date,
-			Timestamp update_date, int like, int dislike) {
+			Timestamp update_date, int like) {
 		super();
 		this.comment_id = comment_id;
 		this.user_id = user_id;
@@ -31,7 +32,7 @@ public class CommentVO {
 		this.write_date = write_date;
 		this.update_date = update_date;
 		this.like = like;
-		this.dislike = dislike;
+		this.isLike = false;
 	}
 	
 	public int getComment_id() {
@@ -82,11 +83,11 @@ public class CommentVO {
 	public void setLike(int like) {
 		this.like = like;
 	}
-	public int getDislike() {
-		return dislike;
+	public boolean getIsLike() {
+		return isLike;
 	}
-	public void setDislike(int dislike) {
-		this.dislike = dislike;
+	public void setIsLike(boolean isLike) {
+		this.isLike = isLike;
 	}
 	
 	

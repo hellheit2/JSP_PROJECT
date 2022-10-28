@@ -20,8 +20,8 @@ import util.PageRequest;
 import util.PageResponse;
 
 
-@WebServlet(name="listController", value="/list")
-public class ListController extends ContentController {
+@WebServlet(name="getContentlistController", value="/list")
+public class GetContentListController extends ContentController {
 	private static final long serialVersionUID = 1L;
 
 	

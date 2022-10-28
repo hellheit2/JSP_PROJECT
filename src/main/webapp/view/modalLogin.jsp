@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-<title>로그인창</title>
 <link rel="stylesheet" href="../assets/css/login.css">
 <div id="login_modal">  
         <div class="wrapper">
 <div class="title"><span>로그인</span></div>
-<form method="post" action="<c:url value='/login' />">
+<form method="post" action="<c:url value='/login' />" class="loginForm">
     <div class="form-group">
         <label class="fas fa-user"><img src="../assets/images/id.png" alt="#" width="40" height="40"></label>
         <input type="text" class="form-control" placeholder="아이디를 입력해주세요." name="userId" required>
