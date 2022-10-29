@@ -97,3 +97,11 @@ create table comment_like(
 	primary key(user_id,comment_id)   
 );
 
+
+select * from comment_like where user_id = 'test';
+
+select * from comment;
+
+update comment set comment_like=0 where comment_id='1';
+
+update comment set comment_body = "내용 수정", update_date = now() where comment_id = 19;

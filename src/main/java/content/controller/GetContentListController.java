@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import content.dao.ContentDAO;
 import content.dao.ContentDAOImpl;
+import content.service.ContentService;
 import content.service.ContentServiceImpl;
 import content.vo.ContentVO;
 import user.vo.UserVO;
@@ -21,10 +22,11 @@ import util.PageResponse;
 
 
 @WebServlet(name="getContentlistController", value="/list")
-public class GetContentListController extends ContentController {
+public class GetContentListController extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 
-	
+	ContentService contentService = new ContentServiceImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");

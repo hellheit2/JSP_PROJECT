@@ -16,7 +16,7 @@
             </div>
             <div class="form-group">
                 <label for="u_pwd" class="fas fa-lock">비밀번호</label>
-                <input type="password" placeholder="Password" name="Pwd" autocomplete="off" maxlength="10" required>
+                <input type="password" placeholder="Password" name="pwd" autocomplete="off" maxlength="10" required>
             </div>
             <div class="form-group">
                 <label for="u_pwd" class="fas fa-lock">비밀번호<br>&nbsp;&nbsp;&nbsp;확인</label>

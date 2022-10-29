@@ -13,7 +13,7 @@ import comment.service.CommentService;
 import comment.service.CommentServiceImpl;
 import user.vo.UserVO;
 
-@WebServlet(name="commentLikeController", value="/like")
+@WebServlet(name="commentLikeController", value="/comment_like")
 public class CommentLikeController extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
@@ -22,11 +22,13 @@ public class CommentLikeController extends HttpServlet{
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		System.out.println("comment_like");
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("user");
 		
 		String user_id = user.getId();
-		int comment_id = Integer.parseInt(request.getParameter("comment-id"));
+		
+		int comment_id = Integer.parseInt(request.getParameter("target-id"));
 		boolean status = Boolean.parseBoolean(request.getParameter("status"));
 		
 		commentService.updateLikeByUser(user_id, comment_id, status);

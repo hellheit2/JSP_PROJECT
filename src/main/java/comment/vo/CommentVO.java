@@ -14,13 +14,7 @@ public class CommentVO {
 	int like;
 	boolean isLike;
 		
-	public CommentVO(String user_id, String content_id, String comment_body) {
-		super();
-		this.user_id = user_id;
-		this.content_id = content_id;
-		this.comment_body = comment_body;
-		this.like = 0;
-	}
+	public CommentVO() {}
 
 	public CommentVO(int comment_id, String user_id, String content_id, String comment_body, Timestamp write_date,
 			Timestamp update_date, int like) {

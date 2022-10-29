@@ -123,12 +123,12 @@
 		                            <c:choose>
 		                           		<c:when test="${user != null}">
 		                           			<c:if test="${contentVO.wish == false}">
-								            	<div onclick="like_func(event, this);" class="wish">
+								            	<div onclick="like_func(event, this, 'wish');" class="wish" data-controller="wish">
 													<img src="../assets/images/wish.png" alt="찜하기" width="45" height="45" id="heart_icon" data-content=<c:out value="${contentVO.id }" />>
 												</div>
 								            </c:if>
 								            <c:if test="${contentVO.wish == true}">
-								            	<div onclick="like_func(event, this);" class="wish">
+								            	<div onclick="like_func(event, this, 'wish');" class="wish" data-controller="wish">
 													<img src="../assets/images/wish_checked.png" alt="찜하기" width="45" height="45" id="heart_icon" data-content=<c:out value="${contentVO.id }" />>
 												</div>
 											</c:if>	

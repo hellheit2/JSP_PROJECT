@@ -35,3 +35,37 @@ button:hover{cursor: pointer;}
 }
 
 input:focus { outline: none; }
+
+.userid{
+	width:574px;
+	overflow:hidden;
+}
+.userid > p{
+	width:200px;
+	float:left;
+}
+.user_com{
+	claer:both;
+}
+.btn_wrap{
+	width:100px;
+	float:right;
+}
+.comments > li{
+	background-color:#eaeaea;
+	border-radius:5px;
+	padding:5px;
+	margin-bottom:8px;
+}
+.button{
+	width:50px;
+	float:right;
+}
+
+.co_modify{
+	width:500px;
+	height:50px;
+	font-size:15px;
+	border-radius:5px;
+	resize:none;
+}
