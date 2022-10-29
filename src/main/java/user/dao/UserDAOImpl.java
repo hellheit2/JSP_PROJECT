@@ -57,7 +57,7 @@ public class UserDAOImpl implements UserDAO{
 		PreparedStatement pstmt = null;
 
 		int cnt = 0;
-		String query = "insert into user (id, pwd, name, email)"
+		String query = "insert into user (user_id, pwd, name, email)"
 				+ " values(?,?,?,?)";
 		try {
 			con = JdbcUtility.getConnection();
@@ -86,13 +86,15 @@ public class UserDAOImpl implements UserDAO{
 	
 
 	public List<String> getWishListById(String user_id){
+		
+		List<String> wishList = new ArrayList<String>();
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
 		String query = "select content_id from wish where user_id = ?";
 		
-		List<String> wishList = new ArrayList<String>();
 		try {
 			con = JdbcUtility.getConnection();
 			pstmt = con.prepareStatement(query);

@@ -1,24 +1,12 @@
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-body{
-  overflow: hidden;
-}
+
+
 ::selection{
   background: rgba(26,188,156,0.3);
-}
-.container{
-  max-width: 500px;
-  padding: 0 20px;
-  margin: 170px auto;
 }
 .wrapper{
   width: 100%;
   background: #f9f9f9;
   border-radius: 5px;
-  box-shadow: 0px 4px 10px 1px rgba(0,0,0,0.1);
   position: relative;
 }
 .wrapper .title{
@@ -32,77 +20,80 @@ body{
   align-items: center;
   justify-content: center;
 }
-.wrapper form{
+.wrapper .loginForm{
   padding: 30px 25px 25px 25px;
 }
-.wrapper form .form-group{
+.wrapper .loginForm .form-group{
   height: 45px;
   margin-bottom: 15px;
   position: relative;
 }
-.wrapper form .form-group input{
+.wrapper .loginForm .form-group input{
   height: 100%;
   width: 100%;
   outline: none;
+  padding-left: 110px;
   border-radius: 5px;
   border: 1px solid lightgrey;
   font-size: 16px;
   transition: all 0.3s ease;
   
 }
-form .form-group input:focus{
+.loginForm .form-group input:focus{
   border-color: #16a085;
   box-shadow: inset 0px 0px 2px 2px rgba(26,188,156,0.25);
 }
-form .form-group input::placeholder{
+.loginForm .form-group input::placeholder{
   color: #999;
 }
-.wrapper form .form-group i{
+.wrapper .loginForm .form-group label{
   position: absolute;
-  width: 47px;
+  width: 100px;
   height: 100%;
+  line-height: normal;
   color: #fff;
-  font-size: 18px;
+  font-size: 16px;
   background: #16a085;
   border: 1px solid #16a085;
   border-radius: 5px 0 0 5px;
   display: flex;
   align-items: center;
   justify-content: center;
+  font-style: normal;
+  font-weight: bold;
 }
-.wrapper form .pass{
+.wrapper .loginForm .pass{
   margin: -8px 0 20px 0;
 }
-.wrapper form .pass a{
+.wrapper .loginForm .pass a{
   color: #16a085;
   font-size: 17px;
   text-decoration: none;
 }
-.wrapper form .pass a:hover{
-  text-decoration: underline;
-}
-.wrapper form .button input{
+
+.wrapper .loginForm .button input{
   color: #fff;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 500;
   padding-left: 0px;
   background: #16a085;
   border: 1px solid #16a085;
   cursor: pointer;
+  text-align: center;
 }
-form .button input:hover{
+.loginForm .button input:hover{
   background: #12876f;
 }
-.wrapper form .signup-link{
+.wrapper .loginForm .signup-link{
   text-align: center;
   margin-top: 20px;
   font-size: 17px;
 }
-.wrapper form .signup-link a{
+.wrapper .loginForm .signup-link a{
   color: #16a085;
   text-decoration: none;
 }
-form .signup-link a:hover{
+.loginForm .signup-link a:hover{
   text-decoration: underline;
 }
 .modal_close_btn{position:absolute; top: 10px; right: 10px; transition: all 0.3s;}

@@ -6,21 +6,26 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
 
+import comment.service.CommentService;
+import comment.service.CommentServiceImpl;
 import comment.vo.CommentVO;
+import user.vo.UserVO;
 import util.PageRequest;
 import util.PageResponse;
 
 @WebServlet(name="getCommentController", value="/comment/list")
-public class GetCommentListController extends CommentController {
+public class GetCommentListController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	
+	CommentService commentService = new CommentServiceImpl();
 	/* jquery & ajax 에서 html 형식으로 만들어서 붙일 경우*/
 	/* 
 	private Gson gson = new Gson();
@@ -37,9 +42,11 @@ public class GetCommentListController extends CommentController {
 	}
 	*/
 	
-	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("user");
 		
 		String content = request.getParameter("r_content");
 		String content_id = request.getParameter("content");
@@ -55,35 +62,21 @@ public class GetCommentListController extends CommentController {
 		for(CommentVO test : commentList) {
 			System.out.println(test.toString());
 		}
+
 		
-		String page = request.getParameter("page");
-		String size = request.getParameter("size");
-		
-		if(page == null) {
-			page = "1";
+		if(user != null) {
+			List<Integer> likeList = commentService.getLikeList(user.getId());
+			commentService.setLikeToComment(likeList, commentList);
 		}
-		
-		PageRequest pageRequest = new PageRequest();
-		if(page != null) {
-			pageRequest.setPage(Integer.parseInt(page));
-		}
-		if(size != null) {
-			pageRequest.setSize(Integer.parseInt(size));
-		}
-		
-		int total = commentList.size();
-		PageResponse<CommentVO> pageResponse = new PageResponse<CommentVO>(pageRequest, commentList, total);
-		
 		
 		/* jquery & ajax 에서 html 형식으로 만들어서 붙일 경우*/
 		// sendAsJson(response, pageResponse);
 		
-		request.setAttribute("pageInfo", pageResponse);
+		request.setAttribute("commentList", commentList);
 		request.getRequestDispatcher("/view/comments.jsp").forward(request, response);
 		
 	}
 
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}

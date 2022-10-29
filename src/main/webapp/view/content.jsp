@@ -10,18 +10,18 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="../assets/js/jquery-3.6.0.min.js"></script>
+<script src="../assets/js/wish.js"></script>
 <link rel="stylesheet" href="../assets/css/reset.css">
 <link rel="stylesheet" href="../assets/css/content.css">
+
 <script>
 	$(document).ready(function(){
 		
 		console.log("start : ");
 		console.log(${content.id});
-	    let commentList = getReviewList(${content.id });
+	    let commentList = getCommentList(${content.id },1);
 	    console.log(${content.id });
 	    
-		
-		
 	  
 	}); //document.ready
 	function isEmpty(str){
@@ -31,19 +31,19 @@
 		else
 			return false ;
 	}
-	function getReviewList(contentId){
+	function getCommentList(contentId, page){
 		let reviewList;
 		
-		console.log( '/comment/list?content='+ contentId);
+		console.log( '/comment/list?content='+ contentId + '&page=' + page);
 		
 		if(!isEmpty(contentId)){
 			console.log(contentId);
 			 $.ajax({
-		        url: '/comment/list?content='+ contentId,
+		        url: '/comment/list?content='+ contentId + '&page=' + page,
 		        type: 'GET',
 		        headers: {"content-type":"application/json"},
 		        success : function(result){
-		        	console.log(result);
+		        	//console.log(result);
 		        	
 		        	let wrap = $('<div>').html(result);
 		        	let comments = wrap.find("div#commetListAjax").html();
@@ -64,8 +64,9 @@
 		}
 	
 		return reviewList;
-		
 	}
+	
+	
 </script>
 </head>
 <body>
@@ -108,11 +109,18 @@
 		
 		<input type="hidden" id="contentId" name="content_id" value="${content.id }">
 		<input type="hidden" id="userId" name="user_id" value="${user.id }">
-		<button type="submit"> 등록</button>
-	 </form>
+		<c:choose>
+			<c:when test="${user != null }">
+				<button type="submit">등록</button>
+			</c:when>
+			<c:otherwise>
+				<button type="button" onclick="login_need(event);">등록</button>
+			</c:otherwise>
+		</c:choose>
+	</form>
  
- 	<div id="comments_wrap"></div>
- 
+	<div id="comments_wrap"></div>
+ 	
 </div>
 	
 	

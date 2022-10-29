@@ -1,4 +1,4 @@
-package user.controller;
+package comment.controller;
 
 import java.io.IOException;
 
@@ -9,25 +9,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import user.service.UserService;
-import user.service.UserServiceImpl;
+import comment.service.CommentService;
+import comment.service.CommentServiceImpl;
 import user.vo.UserVO;
 
-@WebServlet("/wish")
-public class WishController extends HttpServlet {
+@WebServlet(name="commentLikeController", value="/comment_like")
+public class CommentLikeController extends HttpServlet{
+	
 	private static final long serialVersionUID = 1L;
 
-	UserService userService = new UserServiceImpl();
+	CommentService commentService = new CommentServiceImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		System.out.println("comment_like");
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("user");
 		
-		String id = request.getParameter("target-id");
+		String user_id = user.getId();
+		
+		int comment_id = Integer.parseInt(request.getParameter("target-id"));
 		boolean status = Boolean.parseBoolean(request.getParameter("status"));
 		
-		userService.updateWishOfContent(user, id, status);
+		commentService.updateLikeByUser(user_id, comment_id, status);
 		
 	}
 

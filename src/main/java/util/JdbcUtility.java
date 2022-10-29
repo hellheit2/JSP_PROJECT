@@ -30,12 +30,10 @@ public class JdbcUtility {
 		
 		con = null;
 		try {
-			System.out.println("getconnection");
 			//커넥션 풀 사용 Tomcat -context.xml
 //			Class.forName("org.mariadb.jdbc.Driver");
 //			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test","root","12345");
 			con = dataFactory.getConnection();
-			System.out.println("JdbcUtility : " + con);
 			
 		} catch (Exception e) {
 			e.printStackTrace();

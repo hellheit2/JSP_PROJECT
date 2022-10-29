@@ -21,7 +21,7 @@ public class CommentDAOImpl implements CommentDAO{
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String query = "select * from comment where content_id = ?";
+		String query = "select * from comment where content_id = ? order by comment_id desc;";
 		try {
 			con = JdbcUtility.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -36,9 +36,8 @@ public class CommentDAOImpl implements CommentDAO{
 				Timestamp writeDate = rs.getTimestamp("write_date");
 				Timestamp updateDate = rs.getTimestamp("update_date");
 				int like = rs.getInt("comment_like");
-				int dislike = rs.getInt("comment_dislike");
 				
-				CommentVO comment = new CommentVO(commentId,userId,contentId,commentBody,writeDate,updateDate,like,dislike);
+				CommentVO comment = new CommentVO(commentId,userId,contentId,commentBody,writeDate,updateDate,like);
 				
 				commentList.add(comment);
 			}
@@ -73,10 +72,9 @@ public class CommentDAOImpl implements CommentDAO{
 				String commentBody = rs.getString("comment_body");
 				Timestamp writeDate = rs.getTimestamp("write_date");
 				Timestamp updateDate = rs.getTimestamp("update_date");
-				int like = rs.getInt("like");
-				int dislike = rs.getInt("dislike");
+				int like = rs.getInt("comment_like");
 				
-				comment = new CommentVO(commentId,userId,contentId,commentBody,writeDate,updateDate,like,dislike);
+				comment = new CommentVO(commentId,userId,contentId,commentBody,writeDate,updateDate,like);
 			}
 			
 			
@@ -143,16 +141,17 @@ public class CommentDAOImpl implements CommentDAO{
 		PreparedStatement pstmt = null;
 
 		int cnt = 0;
-		String query = "update comment"
-							+ "set comment_body = ?"
-							+ "update_date = sysdate"
+		String query = "update comment "
+							+ "set comment_body = ?, "
+							+ "update_date = now() "
 							+ "where comment_id = ?";
 							
 		try {
 			con = JdbcUtility.getConnection();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1,comment.getComment_body());
-			pstmt.setString(1,comment.getContent_id());
+			pstmt.setInt(2,comment.getComment_id());
+			System.out.println(pstmt.toString());
 			cnt = pstmt.executeUpdate();
 			
 			
@@ -163,6 +162,105 @@ public class CommentDAOImpl implements CommentDAO{
 		}
 		return cnt;
 	}
+	
+	@Override
+	public List<Integer> getLikeList(String user_id){
+		
+		List<Integer> likeList = new ArrayList<>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String query = "select comment_id from comment_like where user_id = ?";
+		
+		try {
+			con = JdbcUtility.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, user_id);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				int comment_id = rs.getInt("comment_id");
+				likeList.add(comment_id);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			JdbcUtility.close(con,pstmt,rs);
+		}
+		
+		return likeList;
+		
+	}
+	
+	@Override
+	public int updateLikeCount(CommentVO comment, int num) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		System.out.println("updateLikeCount : " + num);
+		System.out.println(comment.getLike() + num);
+		int cnt = 0;
+
+		String query = "update comment "
+							+ "set comment_like = ? "
+							+ "where comment_id = ?";
+							
+		try {
+			con = JdbcUtility.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1,comment.getLike() + num);
+			pstmt.setInt(2,comment.getComment_id());
+			
+			System.out.println(query);
+			cnt = pstmt.executeUpdate();
+			
+			System.out.println(cnt);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtility.close(con,pstmt,null);
+		}
+		
+		return cnt;
+		
+	}
+	
+	@Override
+	public int updateLike(String user_id, int comment_id, boolean status) {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		int cnt = 0;
+		String query = null;
+		
+		if(status == true) {
+			System.out.println(true);
+			query = "insert into comment_like (user_id, comment_id) "
+					+ "values (?,?)";
+		}else {
+			System.out.println(false);
+			query = "delete from comment_like where user_id = ? and comment_id = ? ";
+		}
+		
+		
+		try {
+			con = JdbcUtility.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1,user_id);
+			pstmt.setInt(2,comment_id);
+			cnt = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtility.close(con,pstmt,null);
+		}
+		
+		return cnt;
+	}
+	
 	
 
 	

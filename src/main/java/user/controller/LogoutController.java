@@ -11,24 +11,37 @@ import javax.servlet.http.HttpSession;
 
 import user.service.UserService;
 import user.service.UserServiceImpl;
-import user.vo.UserVO;
 
-@WebServlet("/wish")
-public class WishController extends HttpServlet {
+@WebServlet(name="logoutController", value="/logout")
+public class LogoutController extends HttpServlet{
+
 	private static final long serialVersionUID = 1L;
 
 	UserService userService = new UserServiceImpl();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		System.out.println("로그아웃");
 		HttpSession session = request.getSession();
-		UserVO user = (UserVO) session.getAttribute("user");
+		String path = request.getContextPath();
 		
-		String id = request.getParameter("target-id");
-		boolean status = Boolean.parseBoolean(request.getParameter("status"));
+		System.out.println("getContextPath : " + request.getContextPath());
+		System.out.println("getRequestURI : " + request.getRequestURI());
+		System.out.println("getRequestURL : " + request.getRequestURL());
+		System.out.println("getServletPath : " + request.getServletPath());
 		
-		userService.updateWishOfContent(user, id, status);
+		if(session.getAttribute("user") != null) {
+			session.removeAttribute("user");
+		}
 		
+		session.invalidate();
+		
+		response.sendRedirect("/home");
+		
+
 	}
+	
+	
+	
 
 }
