@@ -42,7 +42,7 @@ public class PageResponse<E> {
 	public int getWidth() {
 		return width;
 	}
-	public int getTotal() {
+	public int getTotalContent() {
 		return totalContent;
 	}
 	public int getStartPage() {

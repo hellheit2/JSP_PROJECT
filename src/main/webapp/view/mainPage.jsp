@@ -33,17 +33,42 @@
           font-size: 3.5rem;
         }
       }
+      
+      #my_modal{
+   			border-radius:10px;
+   			display:none;
+   			background-color:#ffffff;
+   			outline:none;
+   			border:none;
+   			overflow:scroll;
+   			-ms-overflow-style:none;
+   		}
+
+		#my_modal::-webkit-scrollbar { 
+		    display: none;
+		    width: 0 !important;
+		}
+		
+		.modal_close_btn{
+			margin:5px;
+		}
     </style>
 
     <!-- Custom styles for this template -->
     <link href="../assets/css/carousel.css" rel="stylesheet">
-	
+	<script src="../assets/js/main_movie.js"></script>
+	<script src="../assets/js/jquery-1.12.4.min.js"></script>
+    <script src="../assets/js/jquery-ui-1.10.4.custom.min.js"></script>
 </head>
 
 <body>
 	<%@ include file = "./modalLogin.jsp" %>
 	<%@ include file = "./modalJoin.jsp" %>
     
+	<div id="my_modal" style="width:600px;height:900px;margin:0;padding:0;">
+	    <iframe src="/content" id="content_detail" style="width:620px;height:900px;">대체 내용</iframe>
+	    <a class="modal_close_btn"><img src="../assets/images/menu_close.png" alt="닫기" width="30" height="30"></a>
+	</div>
     <header>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -74,7 +99,7 @@
 		                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 		                                <li><a class="dropdown-item" href="javascript:void(0)" onclick='location.href="/logout";' id="logout">로그아웃</a></li>
 		                                <li><hr class="dropdown-divider" /></li>
-		                                <li><a class="dropdown-item" href="#!">마이페이지</a></li>
+		                                <li><a class="dropdown-item" href="/mypage">마이페이지</a></li>
 		                            </ul>
 		                        </li>
 	                    	</ul>
@@ -86,7 +111,8 @@
     </header>
 
     <main>
-
+		
+		
         <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -127,42 +153,37 @@
       ================================================== -->
         <!-- Wrap the rest of the page in another container to center all the content. -->
         <div id="wrap">
-            <h2>💛리뷰 랭킹💛</h2>
-            <p class="plus_btn"><a href="/list">+더보기</a></p>
-            <div class="movie_container">
-            	<div class="movie_overflow">
-	            	<div class="movie1">
-		            	<c:forEach var="contentVO" items="${pageInfo.pageList}" begin="0" end="10">
-						    <div class="movie_poster">
-						        <div class="movie_wrap">
-						        	<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
-						            <a href="#"><img src="<c:out value='${url}${contentVO.poster_path}' />" alt="#" width="288" height="400"></a>
-						            <div class="plus"><p><img src="../assets/images/plus.png" alt="#" width="64" height="64"></p></div>
-						        </div>
-						        <div class="movie_ex1">
-						            <div class="movie_idx" title="<c:out value="${contentVO.title }" />">
-						            	<c:out value="${contentVO.title }" />
-						            </div>
-					 	            <div class="movie_date"><c:out value="${contentVO.release_date }" /></div>
-						            <div class="movie_review"><c:out value="${contentVO.vote_average }" /></div>
-						        </div>
-						    </div>
-					    </c:forEach>
-					    <script>
-							var dateList = document.getElementsByClassName('movie_date');
-							Array.from(dateList).forEach(function(date){
-								date.innerHTML = date.innerHTML.slice(-4);	
-							});
-						</script>
-					</div>
-				</div>
-            </div>
-        </div>
+            <div class="wrap_index">
+				<h2>💛리뷰 랭킹💛</h2>
+				<p class="plus_btn">
+				<a href="/list"><img src="../assets/images/plus2.png" width="60"title="더보기"></a>
+				</p>
+			</div>
+			<div id="movie_all">
+				<ul class="movie_wrap">
+					<c:set var="poster" value="https://image.tmdb.org/t/p/w500/" />
+					<c:forEach var="contentVO" items="${pageInfo.pageList}" begin="0" end="8">
+						<li onclick="get_content(this,${contentVO.id })">
+							<a href="#">
+								<img src="<c:out value='${poster}${contentVO.poster_path}' />" alt="#" width="300" height="400">
+							</a>
+						</li>
+					</c:forEach>
+				</ul>
+  			</div>
+		</div>
+      
 
         <!-- FOOTER -->
 
     </main>
-
+	<footer class="py-5 bg-dark">
+		<div class="container">
+			<p style="text-align: center;">
+				<img src="../assets/images/movie-videos-icon.png" style="width:100px;">
+			</p>
+		</div>
+	</footer>
 
     <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
 

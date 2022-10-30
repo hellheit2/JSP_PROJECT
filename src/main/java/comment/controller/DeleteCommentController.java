@@ -18,6 +18,7 @@ public class DeleteCommentController extends HttpServlet{
 
 	CommentService commentService = new CommentServiceImpl();
 	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("댓글 삭제");
 		

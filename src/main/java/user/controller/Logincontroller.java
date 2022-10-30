@@ -22,10 +22,12 @@ public class Logincontroller extends HttpServlet {
 
 	UserService userService = new UserServiceImpl();
 
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("로그인 서블릿");
 		

@@ -19,6 +19,7 @@ public class WishController extends HttpServlet {
 
 	UserService userService = new UserServiceImpl();
 	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();

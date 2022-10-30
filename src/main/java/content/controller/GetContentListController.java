@@ -28,6 +28,7 @@ public class GetContentListController extends HttpServlet {
 
 	ContentService contentService = new ContentServiceImpl();
 	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
@@ -44,7 +45,7 @@ public class GetContentListController extends HttpServlet {
 		/* TMDBService tmdb = new TMDBServiceImpl(); */
 		PageResponse<ContentVO> pageInfo = contentService.getPageContentList(Integer.parseInt(page));
 		
-
+		System.out.println(pageInfo.getTotalContent());
 		System.out.println(user);
 		//찜목록 체크
 		if(user != null) {
@@ -90,11 +91,6 @@ public class GetContentListController extends HttpServlet {
 		
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		doGet(request,response);
-	}
-	
 	
 	
 	

@@ -8,8 +8,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import content.vo.ContentVO;
 import user.vo.UserVO;
 import util.JdbcUtility;
+import util.PageRequest;
 
 public class UserDAOImpl implements UserDAO{
 
@@ -83,8 +85,36 @@ public class UserDAOImpl implements UserDAO{
 		// TODO Auto-generated method stub
 		return 0;
 	}
+	@Override
+	public int wishCount(String user_id) {
+		int count = 0;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String query = "select count(*) from wish where user_id = ?";
+		
+		try {
+			con = JdbcUtility.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1,user_id);
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+            return rs.getInt(1);
+            
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtility.close(con,pstmt,null);
+		}
+		
+		return count;
+	}
 	
-
+	
+	@Override
 	public List<String> getWishListById(String user_id){
 		
 		List<String> wishList = new ArrayList<String>();
@@ -115,6 +145,43 @@ public class UserDAOImpl implements UserDAO{
 				
 	}
 	
+	@Override
+	public List<String> getWishListById(String user_id, PageRequest pageRequest){
+		
+		List<String> wishList = new ArrayList<String>();
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		String query = "select content_id from wish where user_id = ? limit ?, ?";
+
+		int size = pageRequest.getSize();
+		int from = (pageRequest.getPage() - 1) * size;
+		
+		try {
+			con = JdbcUtility.getConnection();
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1,user_id);
+			pstmt.setInt(2, from);
+			pstmt.setInt(3, size);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				String content_id = rs.getString("content_id");
+				wishList.add(content_id);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JdbcUtility.close(con,pstmt,null);
+		}
+		
+		return wishList;
+				
+	}
+
+	@Override
 	public int addWishContent(String user_id, String content_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -138,6 +205,8 @@ public class UserDAOImpl implements UserDAO{
 		
 		return cnt;
 	}
+	
+	@Override
 	public int deleteWishContent(String content_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;

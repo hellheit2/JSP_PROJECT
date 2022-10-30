@@ -3,6 +3,7 @@ package user.dao;
 import java.util.List;
 
 import user.vo.UserVO;
+import util.PageRequest;
 
 public interface UserDAO {
 
@@ -12,7 +13,11 @@ public interface UserDAO {
 	
 	public int delUser(UserVO user);
 	
+	public int wishCount(String user_id);
+	
 	public List<String> getWishListById(String user_id);
+	
+	public List<String> getWishListById(String user_id, PageRequest pageRequest);
 	
 	public int addWishContent(String user_id, String content_id);
 	

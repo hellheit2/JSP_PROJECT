@@ -76,7 +76,7 @@
 		                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 		                                <li><a class="dropdown-item" href="javascript:void(0)" onclick='location.href="/logout";' id="logout">로그아웃</a></li>
 		                                <li><hr class="dropdown-divider" /></li>
-		                                <li><a class="dropdown-item" href="#!">마이페이지</a></li>
+		                                <li><a class="dropdown-item" href="/mypage">마이페이지</a></li>
 		                            </ul>
 		                        </li>
 	                    	</ul>
@@ -90,7 +90,7 @@
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                     <h1 class="display-4 fw-bolder">영화 목록</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">20개씩 나눠서 페이징</p>
+                    <p class="lead fw-normal text-white-50 mb-0"> &quot;${pageInfo.totalContent }&quot;개의 영화</p>
                 </div>
             </div>
         </header>
@@ -112,7 +112,6 @@
 	                       <%--  <div class="card h-100 movie_wrap" onclick="location.href='/content?id=${contentVO.id}'">
 								<c:set var="url" value="https://image.tmdb.org/t/p/w500/" /> --%>
 							<div class="card h-100 movie_wrap" onclick="get_content(this,${contentVO.id })">
-								
 	                           	
 	                           	<c:set var="url" value="https://image.tmdb.org/t/p/w500/" />
 	                            <p><img class="card-img-top" src=<c:out value="${url}${contentVO.poster_path}" /> 
@@ -145,7 +144,8 @@
 	                                <div class="text-center">
 	                                    <h5 class="fw-bolder movie_idx" title="<c:out value="${contentVO.title }" />"><c:out value="${contentVO.title }" /></h5>
 	                                    <div class="movie_date">
-	                                    	<fmt:formatDate pattern="yyyy MMM" value="${contentVO.release_date }" />
+	                                    	<fmt:setLocale value="en_US"></fmt:setLocale>
+	                                    	<fmt:formatDate pattern="MMM, yyyy" value="${contentVO.release_date }" />
 										</div>
 	                                    <%-- <div class="movie_average"><c:out value="${contentVO.vote_average }" /></div> --%>
 	                                	
