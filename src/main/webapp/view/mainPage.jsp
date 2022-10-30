@@ -99,7 +99,7 @@
 		                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 		                                <li><a class="dropdown-item" href="javascript:void(0)" onclick='location.href="/logout";' id="logout">로그아웃</a></li>
 		                                <li><hr class="dropdown-divider" /></li>
-		                                <li><a class="dropdown-item" href="#!">마이페이지</a></li>
+		                                <li><a class="dropdown-item" href="/mypage">마이페이지</a></li>
 		                            </ul>
 		                        </li>
 	                    	</ul>

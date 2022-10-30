@@ -19,6 +19,7 @@ public class AddCommentController extends HttpServlet{
 
 	CommentService commentService = new CommentServiceImpl();
 	
+	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("댓글 추가");
 		

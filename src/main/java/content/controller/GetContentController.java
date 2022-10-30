@@ -21,6 +21,7 @@ public class GetContentController extends HttpServlet {
 
 	ContentService contentService = new ContentServiceImpl();
 	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		request.removeAttribute("content");

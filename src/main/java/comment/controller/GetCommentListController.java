@@ -42,6 +42,7 @@ public class GetCommentListController extends HttpServlet {
 	}
 	*/
 	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		
@@ -74,10 +75,6 @@ public class GetCommentListController extends HttpServlet {
 		
 		request.setAttribute("commentList", commentList);
 		request.getRequestDispatcher("/view/comments.jsp").forward(request, response);
-		
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 	}
 

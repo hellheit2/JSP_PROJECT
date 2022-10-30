@@ -19,6 +19,7 @@ public class LogoutController extends HttpServlet{
 
 	UserService userService = new UserServiceImpl();
 	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("로그아웃");

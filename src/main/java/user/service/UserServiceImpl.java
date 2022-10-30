@@ -1,10 +1,16 @@
 package user.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import content.service.ContentService;
+import content.service.ContentServiceImpl;
+import content.vo.ContentVO;
 import user.dao.UserDAO;
 import user.dao.UserDAOImpl;
 import user.vo.UserVO;
+import util.PageRequest;
+import util.PageResponse;
 
 public class UserServiceImpl implements UserService{
 
@@ -26,6 +32,24 @@ public class UserServiceImpl implements UserService{
 		System.out.println(userDAO.addUser(user));
 	}
 
+	@Override
+	public PageResponse<ContentVO> getWishListDetail(UserVO user, PageRequest pageReauest) {
+		
+		List<String> wishList = userDAO.getWishListById(user.getId(), pageReauest);
+		List<ContentVO> wishListDetail = new ArrayList<>();
+		int total = userDAO.wishCount(user.getId());
+		ContentService contentService = new ContentServiceImpl();
+		
+		for(String temp : wishList) {
+			ContentVO content = contentService.getContent(temp);
+			wishListDetail.add(content);
+		}
+		
+		PageResponse<ContentVO> pageResponse = new PageResponse<ContentVO>(pageReauest, wishListDetail, total);
+		
+		return pageResponse;
+	}
+	
 	@Override
 	public void updateWishOfContent(UserVO user, String content_id, boolean status) {
 		
@@ -51,4 +75,6 @@ public class UserServiceImpl implements UserService{
 		}
 		
 	}
+
+	
 }

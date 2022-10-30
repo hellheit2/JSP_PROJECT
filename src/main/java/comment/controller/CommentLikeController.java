@@ -20,6 +20,7 @@ public class CommentLikeController extends HttpServlet{
 
 	CommentService commentService = new CommentServiceImpl();
 	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		System.out.println("comment_like");

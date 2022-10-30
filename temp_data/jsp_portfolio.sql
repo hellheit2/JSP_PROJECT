@@ -105,3 +105,9 @@ select * from comment;
 update comment set comment_like=0 where comment_id='1';
 
 update comment set comment_body = "내용 수정", update_date = now() where comment_id = 19;
+
+select content_id from wish where user_id = "test" limit 1 , 4;
+
+select * from wish;
+
+select count(*) from wish where user_id="test";

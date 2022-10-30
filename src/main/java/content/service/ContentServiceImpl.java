@@ -15,17 +15,17 @@ public class ContentServiceImpl implements ContentService {
 	ContentDAO tmdbDAO = new ContentDAOImpl();
 	@Override
 	public void insertBoard(ContentVO vo) {
-		
+		/* API 연동으로 대체 */
 	}
 
 	@Override
 	public void updateBoard(ContentVO vo) {
-		
+		/* API 연동으로 대체 */
 	}
 
 	@Override
 	public void deleteBoard(ContentVO vo) {
-		
+		/* API 연동으로 대체 */
 	}
 
 	@Override
