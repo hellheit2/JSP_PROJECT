@@ -90,7 +90,7 @@
             <div class="container px-4 px-lg-5 my-5">
                 <div class="text-center text-white">
                     <h1 class="display-4 fw-bolder">영화 목록</h1>
-                    <p class="lead fw-normal text-white-50 mb-0">20개씩 나눠서 페이징</p>
+                    <p class="lead fw-normal text-white-50 mb-0"> &quot;${pageInfo.totalContent }&quot;개의 영화</p>
                 </div>
             </div>
         </header>
@@ -145,7 +145,8 @@
 	                                <div class="text-center">
 	                                    <h5 class="fw-bolder movie_idx" title="<c:out value="${contentVO.title }" />"><c:out value="${contentVO.title }" /></h5>
 	                                    <div class="movie_date">
-	                                    	<fmt:formatDate pattern="yyyy MMM" value="${contentVO.release_date }" />
+	                                    	<fmt:setLocale value="en_US"></fmt:setLocale>
+	                                    	<fmt:formatDate pattern=" MMM, yyyy" value="${contentVO.release_date }" />
 										</div>
 	                                    <%-- <div class="movie_average"><c:out value="${contentVO.vote_average }" /></div> --%>
 	                                	

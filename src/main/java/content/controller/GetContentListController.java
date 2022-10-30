@@ -44,7 +44,7 @@ public class GetContentListController extends HttpServlet {
 		/* TMDBService tmdb = new TMDBServiceImpl(); */
 		PageResponse<ContentVO> pageInfo = contentService.getPageContentList(Integer.parseInt(page));
 		
-
+		System.out.println(pageInfo.getTotalContent());
 		System.out.println(user);
 		//찜목록 체크
 		if(user != null) {
