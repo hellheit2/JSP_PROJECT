@@ -4,13 +4,13 @@ import java.sql.Timestamp;
 
 public class CommentVO {
 
-	int comment_id;
-	int parent_id;
-	String user_id;
-	String content_id;
-	String comment_body;
-	Timestamp write_date;
-	Timestamp update_date;
+	int comment_id;			// 댓글 색인번호
+	int parent_id;			// 부모 댓글 색인번호
+	String user_id;			// 작성자 아이디
+	String content_id;		// 컨텐츠 색인번호
+	String comment_body;	// 댓글 내용
+	Timestamp write_date;	// 작성 일자
+	Timestamp update_date;	// 변경 일자
 	int like;
 	boolean isLike;
 		

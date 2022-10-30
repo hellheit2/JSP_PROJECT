@@ -6,16 +6,16 @@ import java.util.List;
 import content.vo.ContentVO;
 
 public class PageResponse<E> {
-	private int currentPage; // 현재 페이지
-	private int pageSize; // 한 페이지에 요소 개수
-	private int width; // 페이지 선택지 개수
-	private int totalContent; // 총 요소 개수
-	private int startPage; // 페이징 시작 페이지
-	private int endPage; // 페이징 종료 페이지
-	private int totalPage; // 마지막 페이지
-	private List<E> pageList; // 페이지 요소
-	private boolean showPrev;
-	private boolean showNext;
+	private int currentPage; 	// 현재 페이지
+	private int pageSize; 		// 한 페이지에 요소 개수
+	private int width; 			// 페이지 선택지 개수
+	private int totalContent; 	// 총 요소 개수
+	private int startPage; 		// 페이징 시작 페이지
+	private int endPage; 		// 페이징 종료 페이지
+	private int totalPage; 		// 마지막 페이지
+	private List<E> pageList; 	// 페이지 요소
+	private boolean showPrev;	// 이전 버튼 확성 여부
+	private boolean showNext;	// 다음 버튼 활성 여부
 	
 	public PageResponse(PageRequest pageRequest, List<E> list, int totalContent) {
 		this.currentPage = pageRequest.getPage();

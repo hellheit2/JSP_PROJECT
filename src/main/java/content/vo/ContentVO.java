@@ -15,7 +15,7 @@ public class ContentVO {
 	private List<String> genre_list; 	// 장르
 	private int vote_count;				// 추천 수(api)
 	private float vote_average; 		// 추천 평균(api)
-	private boolean wish; 			// 찜하기
+	private boolean wish; 				// 찜하기
 	
 	public ContentVO() {};
 	

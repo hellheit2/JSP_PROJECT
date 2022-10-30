@@ -38,6 +38,38 @@
 				font-size: 3.5rem;
 			}
 		}
+		.page_wrap > ul, 
+		.page_wrap > li {
+			margin:0;
+			padding:0;
+			list-style:none;
+		}
+		.page_wrap > li{
+			display:inline-block;
+			width:30px;
+			height:30px;
+			margin: 0 3px;	
+		}
+		
+		.page_wrap > .skip{
+			width:50px;
+		}
+		.page_wrap > li > a{
+			text-decoration:none;
+			color:#999999;
+		}
+		.page_wrap > li > span{
+			display:inline-block;
+			text-decoration:none;
+			width:30px;
+			height:30px;
+			line-height:30px;
+			background-color:#999999;
+			border-radius:50%;
+			color:#ffffff;
+			font-weight:bold;
+			text-align:center;
+		}
     </style>
 
    
@@ -151,12 +183,55 @@
 									<td>
 	                                    <fmt:formatDate pattern="yyyy.MM.dd" value="${contentVO.release_date }" />
 									</td>
-									<td>${contentVO.vote_average }</td>
+									<td>
+										<fmt:formatNumber value="${contentVO.vote_average }" pattern=".0" />
+									</td>
 								</tr>
 							</c:forEach>
 						</tbody>
 					</table>
 				</div>
+				
+				 <div id="pagination">
+					<!-- 변수 매핑 -->
+					<c:set var="action" value="/mypage" />
+					<c:set var="page" value="${pageInfo.currentPage}" />
+					<c:set var="beginPage" value="${pageInfo.startPage}" />
+					<c:set var="endPage" value="${pageInfo.endPage}" />
+					<c:set var="totalPage" value="${pageInfo.totalPage}" />
+				    
+				    <ul class="page_wrap">
+				    	<!-- 처음으로 -->
+					    <c:if test="${page != 1 }">
+					    	<li class="skip"><a href="${action}?page=1">처음</a></li>
+					    </c:if>
+					    <!-- 이전버튼 -->
+						<c:if test="${pageInfo.showPrev}">
+							<li class="skip"><a href="${action}?page=${page - 1}">이전</a></li>
+						</c:if>
+					                
+						<!-- 넘버링버튼 for문 -->
+						<c:forEach var="item" varStatus="status" begin="${beginPage}" end="${endPage}" step="1">
+							<c:if test="${page == item}">
+								<li><span>${item}</span></li>
+							</c:if>
+							<c:if test="${page != item}">
+								<li><a href="${action}?page=${item}">${item}</a></li>
+							</c:if>
+						</c:forEach>
+					
+						<!-- 다음버튼 -->
+						<c:if test="${pageInfo.showNext}">
+							<li class="skip"><a href="${action}?page=${endPage + 1}">다음</a></li>
+						</c:if>
+					
+						<!-- 끝으로 -->
+						<c:if test="${page != totalPage }">
+							<li class="skip"><a href="${action}?page=${totalPage}">끝</a></li>
+						</c:if>	
+				    </ul>     
+				</div>
+            </div>
 			</div>
     	</main>
 	</div>

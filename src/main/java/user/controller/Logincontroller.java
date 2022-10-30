@@ -15,7 +15,7 @@ import user.service.UserService;
 import user.service.UserServiceImpl;
 import user.vo.UserVO;
 
-
+/* 로그인 */
 @WebServlet(name = "loginController", value="/login")
 public class Logincontroller extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,51 +23,27 @@ public class Logincontroller extends HttpServlet {
 	UserService userService = new UserServiceImpl();
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
-
-	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("로그인 서블릿");
+		System.out.println("로그인");
 		
+		/* 한글 깨짐 인코딩 */
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		
+		/* 로그인 정보 확인 */
 		String id = request.getParameter("userId"); 
 		String pwd = request.getParameter("userPwd");
 		
-		
-		UserServiceImpl userService = new UserServiceImpl();
+		/* 로그인 */
 		UserVO user = userService.login(id, pwd);
 		
-		RequestDispatcher rd = null;
-		
-		
 		if(user!=null) {
-			if(user.getId().equals("admin")) { // 관리자
-				HttpSession session = request.getSession();
-				session.setAttribute("user", user);
-				request.setAttribute("id", user.getId());
-				System.out.println("관리자");
-			}else { //일반 사용자
-				HttpSession session = request.getSession();
-				session.setAttribute("user", user);
-				request.setAttribute("id", user.getId());
-				System.out.println("일반 사용자");
-				
-				/* 새창으로 갈 경우*/
-				/* 
-				rd = request.getRequestDispatcher("/view/loginSuccess.jsp");
-				rd.forward(request, response);
-				*/
-				response.sendRedirect("/home"); //el 문자랑 한쌍
-				
-			}
-			System.out.println("로그인");
-		}else {
-			System.out.println("로그인 실패");
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+			request.setAttribute("id", user.getId());
 		}
+		
+		response.sendRedirect("/home");
 	}
 
 }
