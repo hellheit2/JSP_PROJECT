@@ -26,57 +26,54 @@ public class GetCommentListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	CommentService commentService = new CommentServiceImpl();
-	/* jquery & ajax 에서 html 형식으로 만들어서 붙일 경우*/
-	/* 
-	private Gson gson = new Gson();
-	
-	private void sendAsJson(HttpServletResponse response, Object obj) throws IOException {
-		response.setContentType("application/json; charset=UTF-8");
-		
-		String json = gson.toJson(obj);
-		
-		PrintWriter out = response.getWriter();
-		
-		out.print(json);
-		out.flush();
-	}
-	*/
 	
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("댓글 리스트 확인");
+		
+		/* 한글 깨짐 인코딩 */
 		request.setCharacterEncoding("UTF-8");
 		
+		/* 회원 정보 확인 */
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("user");
 		
-		String content = request.getParameter("r_content");
+		/* 대상 컨텐츠 정보 확인 */
 		String content_id = request.getParameter("content");
-		String user_id = request.getParameter("user_id");
 		
-		System.out.println(content);
-		System.out.println(content_id);
-		System.out.println(user_id);
-
-
+		/* 컨텐츠 댓글 리스트 */
 		List<CommentVO> commentList = commentService.getCommentList(content_id);
 		
-		for(CommentVO test : commentList) {
-			System.out.println(test.toString());
-		}
-
-		
+		/* 로그인 상태일 경우 */
 		if(user != null) {
+			/* 회원이 좋아요 한 댓글 상태 최신화 */
 			List<Integer> likeList = commentService.getLikeList(user.getId());
 			commentService.setLikeToComment(likeList, commentList);
 		}
 		
-		/* jquery & ajax 에서 html 형식으로 만들어서 붙일 경우*/
-		// sendAsJson(response, pageResponse);
 		
 		request.setAttribute("commentList", commentList);
 		request.getRequestDispatcher("/view/comments.jsp").forward(request, response);
 		
 	}
 
-	
 }
+
+/* jquery & ajax 에서 html 형식으로 만들어서 붙일 경우*/
+/* 
+private Gson gson = new Gson();
+
+private void sendAsJson(HttpServletResponse response, Object obj) throws IOException {
+	response.setContentType("application/json; charset=UTF-8");
+	
+	String json = gson.toJson(obj);
+	
+	PrintWriter out = response.getWriter();
+	
+	out.print(json);
+	out.flush();
+}
+*/
+
+/* jquery & ajax 에서 html 형식으로 만들어서 붙일 경우 (doGet)*/
+// sendAsJson(response, pageResponse);

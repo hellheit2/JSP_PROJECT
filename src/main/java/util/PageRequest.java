@@ -2,8 +2,8 @@ package util;
 
 public class PageRequest {
 	
-	private int page = 1; // 현재 페이지
-	private int size = 20; // 페이지 요소 수
+	private int page = 1; 	// 현재 페이지
+	private int size = 20; 	// 페이지 요소 수
 	private int width = 10; // 표시 페이지 개수
 	
 	

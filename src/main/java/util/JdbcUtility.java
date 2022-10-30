@@ -9,6 +9,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+/* jdbc 기본 공통 부분 분리*/
 public class JdbcUtility {
 	
 	private static Connection con;
@@ -30,9 +31,6 @@ public class JdbcUtility {
 		
 		con = null;
 		try {
-			//커넥션 풀 사용 Tomcat -context.xml
-//			Class.forName("org.mariadb.jdbc.Driver");
-//			con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test","root","12345");
 			con = dataFactory.getConnection();
 			
 		} catch (Exception e) {
@@ -53,3 +51,7 @@ public class JdbcUtility {
 	}
 
 }
+
+//커넥션 풀 사용 Tomcat -context.xml
+//Class.forName("org.mariadb.jdbc.Driver");
+//con = DriverManager.getConnection("jdbc:mariadb://localhost:3306/test","root","12345");

@@ -12,37 +12,32 @@ import user.service.UserService;
 import user.service.UserServiceImpl;
 import user.vo.UserVO;
 
+/* 회원 가입 */
 @WebServlet(name="joinController", value="/join")
 public class JoinController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	UserService userService = new UserServiceImpl();
-	
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("회원가입 서블릿");
+		System.out.println("회원가입");
 		
+		/* 한글 깨짐 인코딩 */
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
 		
-		System.out.println(request.getParameterNames());
-		
+		// 회원 가입 정보
 		String id = request.getParameter("id");
 		String pwd = request.getParameter("pwd");
 		String name = request.getParameter("name");
 		String email = request.getParameter("email");
 		
+		// UserVO 생성
 		UserVO user = new UserVO(id,pwd,name,email);
 		
-		UserServiceImpl userService = new UserServiceImpl();
+		// 회원 등록
 		userService.join(user);
-		
-		System.out.println(user.toString());
 		
 		response.sendRedirect("/home");
 		

@@ -18,10 +18,13 @@ public class CommentDAOImpl implements CommentDAO{
 	@Override
 	public List<CommentVO> getCommentList(String content_id) {
 		List<CommentVO> commentList = new ArrayList<>();
+		
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
+		
 		String query = "select * from comment where content_id = ? order by comment_id desc;";
+		
 		try {
 			con = JdbcUtility.getConnection();
 			pstmt = con.prepareStatement(query);
@@ -224,8 +227,7 @@ public class CommentDAOImpl implements CommentDAO{
 			JdbcUtility.close(con,pstmt,null);
 		}
 		
-		return cnt;
-		
+		return cnt;	
 	}
 	
 	@Override
@@ -234,17 +236,16 @@ public class CommentDAOImpl implements CommentDAO{
 		PreparedStatement pstmt = null;
 		int cnt = 0;
 		String query = null;
-		
-		if(status == true) {
+
+		if(status == true) { // 좋아요 누른 경우
 			System.out.println(true);
 			query = "insert into comment_like (user_id, comment_id) "
 					+ "values (?,?)";
-		}else {
+		}else { // 좋아요 취소한 경우
 			System.out.println(false);
 			query = "delete from comment_like where user_id = ? and comment_id = ? ";
 		}
-		
-		
+
 		try {
 			con = JdbcUtility.getConnection();
 			pstmt = con.prepareStatement(query);

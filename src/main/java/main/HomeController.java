@@ -18,7 +18,7 @@ import content.dao.ContentDAOImpl;
 import content.vo.ContentVO;
 import util.PageResponse;
 
-
+/* 홈 화면 */
 @WebServlet(name="homeController", value="/home")
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;

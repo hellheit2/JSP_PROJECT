@@ -27,7 +27,7 @@ public class ContentDAOImpl implements ContentDAO {
 	
 	public static Map<Integer, String> genreMap = null;
 	
-	
+	// 장르 맵(Map) 세팅
 	public ContentDAOImpl() {
 		if(genreMap == null) {
 			genreMap = genreList("movie");
@@ -36,49 +36,47 @@ public class ContentDAOImpl implements ContentDAO {
 	
 	@Override
 	public void insertBoard(ContentVO vo) {
-		// TODO Auto-generated method stub
-		
+		/* api 사용 */
 	}
 
 	@Override
 	public void updateBoard(ContentVO vo) {
-		// TODO Auto-generated method stub
-		
+		/* api 사용 */
 	}
 
 	@Override
 	public void deleteBoard(ContentVO vo) {
-		// TODO Auto-generated method stub
-		
+		/* api 사용 */
 	}
 
 	@Override
 	public ContentVO getContent(String content_id) {
-		int page = 1;
 		
+		// 리턴 객체
 		ContentVO content = new ContentVO();
+		
+		// 날짜 표현 형식 지정
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
 		try {
 			
-			StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/movie/"); // url
-			urlBuilder.append(URLEncoder.encode(content_id,"UTF-8")); // 영화 아이디
-			urlBuilder.append("?api_key=" +  URLEncoder.encode(API_KEY,"UTF-8") ); // 인증키
-			urlBuilder.append("&watch_region=KR&language=ko&include_image_language=ko,null"); // 언어
-			urlBuilder.append("&page=" + page); // page
+			StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/movie/");	 // 공통 url
+			urlBuilder.append(URLEncoder.encode(content_id,"UTF-8")); 								 // 영화 아이디
+			urlBuilder.append("?api_key=" +  URLEncoder.encode(API_KEY,"UTF-8") ); 					 // 인증키
+			urlBuilder.append("&watch_region=KR&language=ko&include_image_language=ko,null"); 		 // 언어
+			
+			// 요청 url
 			URL url = new URL(urlBuilder.toString());
 
-			BufferedReader bf;
-
-			bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-
+			// 요청 결과
+			BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 			String result = bf.readLine();
 			
-			System.out.println("컨텐츠 1개");
-			System.out.println(result);
+			// 결과 json 파싱
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
 			
+			// ContentVO에 json 정보 세팅
 			content.setId(jsonObject.get("id").toString());
 			content.setTitle(jsonObject.get("title").toString());
 			content.setOriginal_title(jsonObject.get("original_title").toString());
@@ -113,18 +111,18 @@ public class ContentDAOImpl implements ContentDAO {
 			
 			
 			List<String> genreList = new ArrayList<String>();
-			// 장르 id를 List<integer> 형태로 저장 → 장르 비교를 위한 작업
+			// 장르 id를 List<String> 형태로 저장 → 장르 비교를 위한 작업
 			JSONArray genre_list = (JSONArray) jsonObject.get("genres");
 			if(genre_list != null) {
 				for (int k = 0; k < genre_list.size(); k++) {
 					JSONObject genre = (JSONObject) genre_list.get(k);
-					String genreStr = genreMap.get(Integer.parseInt(genre.get("id").toString()));
-							
+					String genreStr = genreMap.get(Integer.parseInt(genre.get("id").toString()));		
 					genreList.add(genreStr);
 				}
 			}
-			content.setGenre_list(genreList);
-				
+			
+			// 장르 set
+			content.setGenre_list(genreList);			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -143,40 +141,40 @@ public class ContentDAOImpl implements ContentDAO {
 		int totalResult = 0;
 		try {
 			String type_temp = "movie";
-		    String provider_temp = "8"; //Netflix 서비스 플랫폼 tmdb oas 참고
-	
-	
-			//이미지 경로
-			//https://image.tmdb.org/t/p/original/ or /w500
-			//특정영화 아이디
-			//https://api.themoviedb.org/3/movie/(아이디)?api_key=5cf3fb46e228d63ef250b0c89399e2b8	
-			//https://api.themoviedb.org/3/movie/popular?api_key=5cf3fb46e228d63ef250b0c89399e2b8&with_watch_providers=8&language=ko
+		    String provider_temp = "8";
 		    
-			StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/discover/"); // url
-			urlBuilder.append(URLEncoder.encode(type_temp,"UTF-8")); // 카테고리
-			urlBuilder.append("?api_key=" +  URLEncoder.encode(API_KEY,"UTF-8") ); // 인증키
-			urlBuilder.append("&with_watch_providers=" + URLEncoder.encode(provider_temp,"UTF-8")); // 서비스 플랫폼
-			urlBuilder.append("&watch_region=KR&language=ko&include_image_language=ko,null"); // 언어
-			urlBuilder.append("&page=" + page); // page
+			StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/discover/"); 	// 공통 url
+			urlBuilder.append(URLEncoder.encode(type_temp,"UTF-8")); 									// 카테고리
+			urlBuilder.append("?api_key=" +  URLEncoder.encode(API_KEY,"UTF-8") ); 						// 인증키
+			urlBuilder.append("&with_watch_providers=" + URLEncoder.encode(provider_temp,"UTF-8"));		// 서비스 플랫폼
+			urlBuilder.append("&watch_region=KR&language=ko&include_image_language=ko,null"); 			// 언어
+			urlBuilder.append("&page=" + page); 														// page
+			
+			// 요청 url
 			URL url = new URL(urlBuilder.toString());
 
-			BufferedReader bf;
-
-			bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-
+			// 요청 결과
+			BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 			String result = bf.readLine();
+			
+			// 결과 json 파싱
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
+			
+			// 요청 결과 중 results key값의 value가 영화 목록
 			JSONArray jsonArray = (JSONArray) jsonObject.get("results");
 
+			// 요청 결과 총 컨텐츠 수
 			totalResult = Integer.parseInt(jsonObject.get("total_results").toString());
 			
-			for (int i = 0; i < jsonArray.size(); i++) { // 페이지당 컨텐츠 반복
+			// 페이지의 컨텐츠 요소
+			for (int i = 0; i < jsonArray.size(); i++) {
 				
+				// json 파싱 결과의 배열 내부의 각 영화에 해당하는 json 재파싱
 				ContentVO temp = new ContentVO();
 				JSONObject content = (JSONObject) jsonArray.get(i);
 
-				
+				// ContentVO에 json 정보 세팅
 				temp.setId(content.get("id").toString());
 				temp.setTitle(content.get("title").toString());
 				temp.setOriginal_title(content.get("original_title").toString());
@@ -211,7 +209,7 @@ public class ContentDAOImpl implements ContentDAO {
 				
 				
 				List<String> genreList = new ArrayList<String>();
-				// 장르 id를 List<integer> 형태로 저장 → 장르 비교를 위한 작업
+				// 장르 id를 List<String> 형태로 저장 → 장르 비교를 위한 작업
 				JSONArray genre_list = (JSONArray) content.get("genre_ids");
 				for (int k = 0; k < genre_list.size(); k++) {
 					String genreStr = genreMap.get(Integer.parseInt(String.valueOf(genre_list.get(k))));
@@ -227,8 +225,11 @@ public class ContentDAOImpl implements ContentDAO {
 			e.printStackTrace();
 		}
 		
+		// 페이지 요청 정보 설정
 		PageRequest pageRequest = new PageRequest();
 		pageRequest.setPage(page);
+		
+		// 페이징 결과
 		PageResponse<ContentVO> pageResponse = new PageResponse<ContentVO>(pageRequest, contentList, totalResult);
 		
 		return pageResponse;
@@ -241,24 +242,26 @@ public class ContentDAOImpl implements ContentDAO {
 		
 		try {
 			String temp_type = "movie";
-		    //https://api.themoviedb.org/3/genre/movie/list?api_key=5cf3fb46e228d63ef250b0c89399e2b8&language=ko
-			StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/genre/"); // url
-			urlBuilder.append(URLEncoder.encode(temp_type,"UTF-8") + "/list"); // 카테고리
-			urlBuilder.append("?api_key=" +  URLEncoder.encode(API_KEY,"UTF-8") ); // 인증키
-			urlBuilder.append("&language=ko"); // 언어
+			
+			StringBuilder urlBuilder = new StringBuilder("https://api.themoviedb.org/3/genre/"); 	// url
+			urlBuilder.append(URLEncoder.encode(temp_type,"UTF-8") + "/list"); 						// 카테고리
+			urlBuilder.append("?api_key=" +  URLEncoder.encode(API_KEY,"UTF-8") ); 					// 인증키
+			urlBuilder.append("&language=ko"); 														// 언어
 	
+			// 요청 url
 			URL url = new URL(urlBuilder.toString());
 			
-			BufferedReader bf;
-	
-			bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-	
+			// 요청 결과
+			BufferedReader bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
 			String result = bf.readLine();
 			
+			// 결과 json 파싱
 			JSONParser jsonParser = new JSONParser();
 			JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
 
 			JSONArray genre_list = (JSONArray) jsonObject.get("genres");
+			
+			// 장르 id, 장르명 Map 형태로 저장
 			for (int i = 0; i < genre_list.size(); i++) {
 				JSONObject genre = (JSONObject) genre_list.get(i);
 				// 장르 {id:name}
@@ -271,8 +274,7 @@ public class ContentDAOImpl implements ContentDAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		System.out.println(genres.toString());
+
 		return genres;
 	}
 

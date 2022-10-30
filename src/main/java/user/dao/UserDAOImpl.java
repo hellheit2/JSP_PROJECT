@@ -82,7 +82,7 @@ public class UserDAOImpl implements UserDAO{
 	
 	@Override
 	public int delUser(UserVO user) {
-		// TODO Auto-generated method stub
+		/* 회원탈퇴 미구현 */
 		return 0;
 	}
 	@Override

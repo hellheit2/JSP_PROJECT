@@ -58,6 +58,7 @@ public class ContentServiceImpl implements ContentService {
         return pageList;
     }
 	
+	// 페이지 요청 결과의 컨텐츠에 찜목록 여부 설정
 	@Override
 	public void setWishListOnPageList(List<String> wishList, List<ContentVO> contentList) {
 		
